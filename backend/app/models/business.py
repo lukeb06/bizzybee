@@ -17,7 +17,7 @@ class Business(db.Model):
     state = db.Column(db.String(50), nullable=False)
     zipcode = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(50), nullable=False)
-    descriphtion = db.Column(db.String(500))
+    description = db.Column(db.String(500))
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
     price_range = db.Column(db.Integer, nullable=False)
@@ -49,4 +49,3 @@ class Business(db.Model):
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
         }
-
