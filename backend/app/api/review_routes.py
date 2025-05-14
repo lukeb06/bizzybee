@@ -14,7 +14,7 @@ def reviews(business_id: int ):
     return jsonify([r.to_dict() for r in reviews])
 
 
-@review_routes.route("/business/<business_id>/reviews/<review_id>", methods=["DELETE"])
+@review_routes.route("/<review_id>", methods=["DELETE"])
 @login_required
 def delete_review(review_id):
     review = Review.query.get(review_id)
@@ -23,7 +23,7 @@ def delete_review(review_id):
         return jsonify({"error": "Review not found"}), 404
 
     if review.userId != current_user.id:
-        return jsonify({"error": "Cannot delete e review you did not leave"}), 401
+        return jsonify({"error": "Cannot delete a review you did not leave"}), 401
 
     db.session.delete(review)
     db.session.commit()
