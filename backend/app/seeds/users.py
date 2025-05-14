@@ -25,5 +25,6 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
+        db.session.execute(text("ALTER SEQUENCE users_id_seq RESTART WITH 1"))
 
     db.session.commit()
