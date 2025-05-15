@@ -3,7 +3,7 @@ from app.models import Business
 from flask_login import login_required, current_user
 from app.models.db import db
 
-business_routes = Blueprint("business", __name__)
+business_routes = Blueprint("business", __name__, url_prefix="/business")
 
 
 @business_routes.route("/", methods=["GET"])
