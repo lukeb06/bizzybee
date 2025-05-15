@@ -25,7 +25,9 @@ def seed_images():
         updated_at=datetime.utcnow()
     )
 
-    db.session.add_all([image1, image2, image3])
+    db.session.add(image1)
+    db.session.add(image2)
+    db.session.add(image3)
     db.session.commit()
 
 
@@ -34,5 +36,6 @@ def undo_images():
         db.session.execute(f"TRUNCATE table {SCHEMA}.images RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM images"))
+        db.session.execute(text("ALTER SEQUENCE users_id_seq RESTART WITH 1"))
 
-        db.session.commit()
+    db.session.commit()
