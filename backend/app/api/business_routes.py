@@ -53,9 +53,9 @@ def create_business():
     return jsonify(business.to_dict())
 
 
-@business_routes.route("/", methods=["PUT"])
+@business_routes.route("/<id>", methods=["PUT"])
 @login_required
-def update_business():
+def update_business(id):
     """
     Update a business
     """
