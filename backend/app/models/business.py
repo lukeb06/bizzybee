@@ -13,11 +13,11 @@ class Business(db.Model):
     country = db.Column(db.String(50))
     address = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
     zipcode = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(500))
+    type = db.Column(db.String(50), nullable=False)
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
     price_range = db.Column(db.Integer, nullable=False)
@@ -28,8 +28,8 @@ class Business(db.Model):
 
     # Relationship
     user = db.relationship("User", back_populates="businesses")
-    reviews = db.relationship("Review", back_populates="business")
-    images = db.relationship("Image", back_populates="business")
+    # reviews = db.relationship("Review", back_populates="business")
+    # images = db.relationship("Image", back_populates="business")
 
     def to_dict(self):
         return {
