@@ -32,7 +32,8 @@ def seed_businesses():
         created_at=datetime.utcnow()
     )
 
-    db.session.add_all([biz1,biz2])
+    db.session.add(biz1)
+    db.session.add(biz2)
     db.session.commit()
     
 
