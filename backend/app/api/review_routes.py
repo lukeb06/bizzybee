@@ -9,17 +9,17 @@ from flask_login import login_required, current_user
 
 
 
-review_routes = Blueprint("review", __name__)
+review_routes = Blueprint("review", __name__, url_prefix="/reviews")
 
 
-@review_routes.route("/business/<business_id>/reviews", methods=["GET"])
+@review_routes.route("/business/<business_id>", methods=["GET"])
 def reviews(business_id: int ):
     
 
     reviews = Review.query.filter(Review.businessId == business_id).all()
     return jsonify([r.to_dict() for r in reviews])
 
-@review_routes.route("/business/<business_id>/reviews", methods=["POST"])
+@review_routes.route("/business/<business_id>", methods=["POST"])
 def post_reviews(business_id: int):
     form = ReviewForm()
     if form.validate_on_submit():
