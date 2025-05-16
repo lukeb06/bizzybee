@@ -30,7 +30,7 @@ def undo_reviews():
         db.session.execute(f"TRUNCATE table {SCHEMA}.reviews RESTART INDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE from reviews"))
-        db.session.execute(text("ALTER SEQUENCE users_id_seq RESTART WITH 1"))
+        db.session.execute(text("ALTER SEQUENCE reviews_id_seq RESTART WITH 1"))
 
     db.session.commit()
 
