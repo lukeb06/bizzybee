@@ -20,14 +20,20 @@ def reviews(business_id: int ):
     return jsonify([r.to_dict() for r in reviews])
 
 @review_routes.route("/business/<business_id>", methods=["POST"])
+@login_required
 def post_reviews(business_id: int):
     form = ReviewForm()
     if form.validate_on_submit():
         review = Review(
+            userId=current_user.id,
             review=form.data['review'],
             businessId = business_id,
             stars=form.data['stars']
         )
+        reviews=Review.query.filter(Review.userId==current_user.id, Review.businessId==business_id).all()
+        if reviews:
+            return {"errors": {"message": "User has already reviewed the business"}}, 401
+        
         db.session.add(review)
         db.session.commit()
         return review.to_dict()
