@@ -3,7 +3,7 @@ from app.models import Business
 from flask_login import login_required, current_user
 from app.models.db import db
 
-business_routes = Blueprint("business", __name__)
+business_routes = Blueprint("business", __name__, url_prefix="/business")
 
 
 @business_routes.route("/", methods=["GET"])
@@ -11,9 +11,22 @@ def businesses():
     """
     Get all businesses
     """
+    query = Business.query
+    
+    name = request.args.get("name")
+    if name:
+        query = query.filter(Business.name.like(f"%{name}%"))
 
-    businesses = Business.query.all()
-    return jsonify([b.to_dict() for b in businesses])
+    category = request.args.get("category")
+    if category:
+        query = query.filter(Business.category.like(f"%{category}%"))
+    
+    max_price = request.args.get("max_price", type=float)
+    if max_price is not None:
+        query = query.filter(Business.price <= max_price)
+
+    businesses = query.all()
+    return jsonify([business.to_dict() for business in businesses])
 
 
 @business_routes.route("/<id>", methods=["GET"])

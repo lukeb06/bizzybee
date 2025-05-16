@@ -21,7 +21,8 @@ def seed_reviews():
         updated_at=datetime.utcnow()
     )
 
-    db.session.add_all([review1,review2])
+    db.session.add(review1)
+    db.session.add(review2)
     db.session.commit()
 
 def undo_reviews():
@@ -29,6 +30,8 @@ def undo_reviews():
         db.session.execute(f"TRUNCATE table {SCHEMA}.reviews RESTART INDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE from reviews"))
+        db.session.execute(text("ALTER SEQUENCE users_id_seq RESTART WITH 1"))
+
     db.session.commit()
 
     
