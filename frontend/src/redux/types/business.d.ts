@@ -1,3 +1,5 @@
+import { GET_ALL_BUSINESSES, CREATE_BUSINESS } from '../types/business';
+
 export interface IBusiness {
     id: number;
     owner_id: number;
@@ -6,6 +8,7 @@ export interface IBusiness {
     city: string;
     state: string;
     zipcode: string;
+    description: string;
     type: string;
     lat: number;
     lng: number;
@@ -23,5 +26,5 @@ export interface BusinessState {
 
 export interface IActionCreator {
     type: string;
-    payload: IBusiness[];
+    payload: IBusiness | IBusiness[];
 }
