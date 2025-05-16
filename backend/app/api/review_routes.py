@@ -76,6 +76,6 @@ def edit_review(review_id):
     review.stars = data.get("stars", review.stars)
 
     db.session.commit()
-    return jsonify(review.todict())
+    return jsonify(review.to_dict())
 
 
