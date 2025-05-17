@@ -27,9 +27,9 @@ class Business(db.Model):
     )
 
     # Relationship
-    user = db.relationship("User", back_populates="businesses")
-    reviews = db.relationship("Review", back_populates="business")
-    # images = db.relationship("Image", back_populates="business")
+    user = db.relationship("User", back_populates="businesses", uselist=False)
+    reviews = db.relationship("Review", back_populates="businesses", uselist=True)
+    images = db.relationship("Image", back_populates="businesses")
 
     def to_dict(self):
         return {
