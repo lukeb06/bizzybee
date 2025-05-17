@@ -13,7 +13,7 @@ def seed_images():
 
     image2 = Image(
         url="https://m.media-amazon.com/images/I/71TF6e3w12L._AC_UF894,1000_QL80_.jpg",
-        businessId=2
+        businessId=2,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
