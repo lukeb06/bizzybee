@@ -20,7 +20,7 @@ def seed_images():
 
     image3 = Image(
         url="https://assets1.storebrands.com/images/v/max_width_1440/sb/2023-07/walmart.jpg",
-        businessId=3,
+        businessId=2,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
