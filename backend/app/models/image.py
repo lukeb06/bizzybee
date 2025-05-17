@@ -15,7 +15,7 @@ class Image(db.Model):
 
             #Relationship
 
-    business = db.relationship("Business", back_populates="images")
+    businesses = db.relationship("Business", back_populates="images", uselist=False)
 
 
     def to_dict(self):
