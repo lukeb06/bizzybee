@@ -20,7 +20,7 @@ const createBusinessAction = (business: IBusiness) => ({
 // Get all businesses
 export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
     try {
-        const response = await fetch('/api/businesses');
+        const response = await fetch('/api/business');
         if (response.ok) {
             const data = await response.json();
             dispatch(getAllBusinessesAction(data));
