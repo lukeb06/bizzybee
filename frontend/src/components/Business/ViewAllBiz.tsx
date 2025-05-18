@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllBusinesses } from '../../redux/business';
-// import './HomePage.css';
+// import './ViewAllBiz.css';
 import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 
-export default function HomePage() {
+export default function ViewAllBiz() {
     const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
-    console.log('=========THIS IS BUSINESS=====', businesses);
+    // console.log('=========THIS IS BUSINESS=====', businesses);
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
 
