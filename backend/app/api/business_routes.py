@@ -26,7 +26,10 @@ def businesses():
         query = query.filter(Business.price <= max_price)
 
     businesses = query.all()
-    return jsonify([business.to_dict() for business in businesses])
+    if (name or category or max_price) and not businesses:
+        return jsonify({"message": "No businesses found matching your search."}), 404
+
+    return jsonify({"result": [business.to_dict() for business in businesses]})
 
 
 @business_routes.route("/<id>", methods=["GET"])
