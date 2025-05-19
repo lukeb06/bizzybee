@@ -1,3 +1,3 @@
-import HomePage from './HomePage';
+import ViewAllBiz from './ViewAllBiz';
 
-export default HomePage;
+export default ViewAllBiz;
