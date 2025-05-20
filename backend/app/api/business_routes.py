@@ -11,25 +11,32 @@ def businesses():
     """
     Get all businesses
     """
-    query = Business.query
-    
-    name = request.args.get("name")
-    if name:
-        query = query.filter(Business.name.like(f"%{name}%"))
+    businesses = Business.query.options(
+        db.joinedload(Business.images),
+        db.subqueryload(Business.reviews)
+    ).all()
 
-    category = request.args.get("category")
-    if category:
-        query = query.filter(Business.category.like(f"%{category}%"))
-    
-    max_price = request.args.get("max_price", type=float)
-    if max_price is not None:
-        query = query.filter(Business.price <= max_price)
+    response = []
+    for b in businesses:
+        preview = next((img for img in b.images if getattr(img, 'is_preview', False)), None)
+        featured = next((img for img in b.images if getattr(img, 'is_featured', False)), None)
+        review_count = len(b.reviews)
+        avg_rating = round(sum([r.stars for r in b.reviews]) / review_count,1) if review_count > 0 else None
 
-    businesses = query.all()
-    if (name or category or max_price) and not businesses:
-        return jsonify({"message": "No businesses found matching your search."}), 404
-
-    return jsonify([business.to_dict() for business in businesses])
+        response.append({
+            'id': b.id,
+            'name':b.name,
+            'category': b.category,
+            'address':b.address,
+            'city': b.city,
+            'state': b.state,
+            'price_range': b.price_range,
+            'preview_image' : preview.url if preview else None,
+            'featured_image' : featured.url if featured else None,
+            'average_rating': avg_rating,
+            'review_count': review_count
+        })
+    return jsonify(response)
 
 
 @business_routes.route("/<id>", methods=["GET"])
@@ -51,21 +58,64 @@ def create_business():
 
     data = request.get_json()
     business = Business(
+        owner_id=current_user.id,
         name=data.get("name"),
         country=data.get("country"),
         address=data.get("address"),
         city=data.get("city"),
-        type=data.get("type"),
         state=data.get("state"),
         zipcode=data.get("zipcode"),
-        price_range=data.get("price_range"),
+        category=data.get("category"),
         description=data.get("description"),
+        price_range=data.get("price_range"),
         lat=data.get("lat"),
         lng=data.get("lng"),
-        owner_id=current_user.id,
     )
     db.session.add(business)
     db.session.commit()
+
+    business_id = business.id
+
+    # add featured image
+    featured_image = Image(
+        business_id=business_id,
+        url=data.get("featured_image"),
+        is_featured=True
+    )
+
+    db.session.add(featured_image)
+    db.session.commit()
+
+    # add preview image
+    preview_image = Image(
+        business_id=business_id,
+        url=data.get("preview_image"),
+        is_preview=True
+    )
+
+    db.session.add(preview_image)
+    db.session.commit()
+
+    # add other images
+    image_urls = data.get("image_urls", [])
+    for url in image_urls:
+        image = Image(
+            business_id=business_id,
+            url=url,
+            is_featured=False,
+            is_preview=False
+        )
+        db.session.add(image)
+
+    db.session.commit()
+
+    
+
+
+
+
+    
+
     return jsonify(business.to_dict())
 
 
@@ -90,7 +140,7 @@ def update_business(id):
     business.city = data.get("city", business.city)
     business.state = data.get("state", business.state)
     business.zipcode = data.get("zipcode", business.zipcode)
-    business.type = data.get("type", business.type)
+    business.category = data.get("category", business.category)
     business.description=data.get("description",business.description)
     business.price_range = data.get("price_range", business.price_range)
     business.lat=data.get("lat",business.lat)

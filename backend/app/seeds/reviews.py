@@ -4,8 +4,8 @@ from datetime import datetime
 
 def seed_reviews():
     review1 = Review(
-        userId=1,
-        businessId=2,
+        user_id=1,
+        business_id=2,
         review="Great cutomer serivce with breathtaking scenic views",
         stars=5,
         created_at=datetime.utcnow(),
@@ -13,8 +13,8 @@ def seed_reviews():
     )
 
     review2 = Review(
-        userId=2,
-        businessId=1,
+        user_id=2,
+        business_id=1,
         review="Honestly, worst place to go with your family",
         stars=2,
         created_at=datetime.utcnow(),

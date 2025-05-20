@@ -16,7 +16,7 @@ review_routes = Blueprint("review", __name__, url_prefix="/reviews")
 def reviews(business_id: int ):
     
 
-    reviews = Review.query.filter(Review.businessId == business_id).all()
+    reviews = Review.query.filter(Review.business_id == business_id).all()
     return jsonify([r.to_dict() for r in reviews])
 
 @review_routes.route("/business/<business_id>", methods=["POST"])
@@ -25,12 +25,12 @@ def post_reviews(business_id: int):
     form = ReviewForm()
     if form.validate_on_submit():
         review = Review(
-            userId=current_user.id,
+            user_id=current_user.id,
             review=form.data['review'],
-            businessId = business_id,
+            business_id = business_id,
             stars=form.data['stars']
         )
-        reviews=Review.query.filter(Review.userId==current_user.id, Review.businessId==business_id).all()
+        reviews=Review.query.filter(Review.user_id==current_user.id, Review.business_id==business_id).all()
         if reviews:
             return {"errors": {"message": "User has already reviewed the business"}}, 401
         
@@ -48,7 +48,7 @@ def delete_review(review_id):
     if not review:
         return jsonify({"error": "Review not found"}), 404
 
-    if review.userId != current_user.id:
+    if review.user_id != current_user.id:
         return jsonify({"error": "Cannot delete a review you did not leave"}), 401
 
     db.session.delete(review)
@@ -64,7 +64,7 @@ def edit_review(review_id):
     if not review:
         return jsonify({"error": "Review not found"}), 404
 
-    if review.userId != current_user.id:
+    if review.user_id != current_user.id:
         return jsonify({"error": "Cannot edit a review you did not leave"}), 401
     
 
