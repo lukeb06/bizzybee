@@ -62,6 +62,8 @@ def upgrade():
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("url", sa.String(length=300), nullable=False),
         sa.Column("businessId", sa.Integer(), nullable=False),
+        sa.Column("is_featured", sa.Boolean(), nullable=False),
+        sa.Column("is_preview", sa.Boolean(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=True),
         sa.Column("updated_at", sa.DateTime(), nullable=True),
         sa.ForeignKeyConstraint(
