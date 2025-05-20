@@ -11,6 +11,26 @@ def businesses():
     """
     Get all businesses
     """
+    # Search/ Filter businesses
+    query = Business.query
+
+    name = request.args.get("name")
+    if name:
+        query = query.filter(Business.name.like(f"%{name}%"))
+
+    category = request.args.get("category")
+    if category:
+        query = query.filter(Business.category.like(f"%{category}%"))
+
+    max_price = request.args.get("max_price", type=float)
+    if max_price is not None:
+        query = query.filter(Business.price <= max_price)
+
+    businesses = query.all()
+    if (name or category or max_price) and not businesses:
+        return jsonify({"message": "No businesses found matching your search."}), 404
+    
+    # Get all businesses with reviews and images
     businesses = Business.query.options(
         db.joinedload(Business.images),
         db.subqueryload(Business.reviews)
