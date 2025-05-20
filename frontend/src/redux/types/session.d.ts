@@ -5,6 +5,7 @@ export interface SessionInitialState {
 export interface IUser {
     id: number;
     email: string;
+    username: string;
 }
 
 export interface ISignUpUser {

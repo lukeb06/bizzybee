@@ -1,8 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
-import HomePage from '../components/Business';
+import ViewAllBusinessesPage from '../components/Businesses';
 import Layout from './Layout';
+import CreateBusinessFormPage from '../components/CreateBizForm';
+import BusinessDetailPage from '../components/Business';
 
 export const router = createBrowserRouter([
     {
@@ -10,7 +12,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <HomePage />,
+                element: <ViewAllBusinessesPage />,
             },
             {
                 path: 'login',
@@ -19,6 +21,14 @@ export const router = createBrowserRouter([
             {
                 path: 'signup',
                 element: <SignupFormPage />,
+            },
+            {
+                path: '/create-business',
+                element: <CreateBusinessFormPage />,
+            },
+            {
+                path: '/business/:businessId',
+                element: <BusinessDetailPage />,
             },
         ],
     },
