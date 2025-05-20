@@ -31,7 +31,7 @@ export default function ViewAllBiz() {
                 ) : (
                     <div className="businesss-container">
                         {businesses.map((business, index) => (
-                            <div key={index} className="property-container" title={business.name}>
+                            <div key={index} className="property-container">
                                 <div className="image-container">
                                     {/* {business.previewImage ? (
                                         <>
@@ -48,22 +48,34 @@ export default function ViewAllBiz() {
                                         </div>
                                     )} */}
                                 </div>
-                                <div className="property-details">
-                                    <div className="property-top-row">
-                                        <div className="city-state">
-                                            {business.city}, {business.state}
-                                        </div>
-                                        <div className="star-rating">
-                                            {/* <span>
+                                <div className="biz-details">
+                                    <div className="biz-title">
+                                        <p>{business.name}</p>
+                                    </div>
+                                    <div className="rating-reviews">
+                                        {/* <span>
                                                 {business.avgRating
                                                     ? parseFloat(business.avgRating).toFixed(1)
                                                     : 'New'}{' '}
                                             </span> */}
-                                        </div>
                                     </div>
-                                    <p className="price">
-                                        <strong>{'$'.repeat(business.price_range)}</strong>
-                                    </p>
+                                    <div className="biz-hour"></div>
+                                    <div className="location-price-hour">
+                                        <span>
+                                            {business.city}, {business.state}
+                                        </span>
+                                        <strong> ‧ </strong>
+                                        <span>{'$'.repeat(business.price_range)}</span>
+                                        <strong> ‧ </strong>
+                                    </div>
+                                    <div className="most-recent-review">
+                                        {/* <span>
+                                            {business.avgRating
+                                                ? parseFloat(business.avgRating).toFixed(1)
+                                                : 'New'}{' '}
+                                        </span> */}
+                                    </div>
+                                    <p className="price"></p>
                                 </div>
                             </div>
                         ))}
