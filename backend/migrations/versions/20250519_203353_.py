@@ -104,4 +104,5 @@ def downgrade():
     op.drop_table("images")
     op.drop_table("businesses")
     op.drop_table("users")
+
     # ### end Alembic commands ###

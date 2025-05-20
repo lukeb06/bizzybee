@@ -3,7 +3,10 @@ from .users import seed_users, undo_users
 from .businesses import seed_businesses, undo_businesses
 from .reviews import seed_reviews, undo_reviews
 from .images import seed_images, undo_images
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 from app.models import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -36,8 +39,12 @@ def undo():
     undo_images()
     undo_reviews()
     undo_businesses()
+<<<<<<< Updated upstream
     undo_users()
 
     
     
     # Add other undo functions here
+=======
+    undo_users()
+>>>>>>> Stashed changes
