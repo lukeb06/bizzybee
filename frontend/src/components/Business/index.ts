@@ -1,3 +1,3 @@
-import ViewAllBiz from './ViewAllBiz';
+import BusinessDetailPage from './BusinessPage';
 
-export default ViewAllBiz;
+export default BusinessDetailPage;

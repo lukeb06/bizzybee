@@ -17,7 +17,7 @@ class Business(db.Model):
     zipcode = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(500))
-    type = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
     price_range = db.Column(db.Integer, nullable=False)
@@ -38,7 +38,7 @@ class Business(db.Model):
             "country": self.country,
             "address": self.address,
             "city": self.city,
-            "type": self.type,
+            "category": self.category,
             "state": self.state,
             "zipcode": self.zipcode,
             "name": self.name,
