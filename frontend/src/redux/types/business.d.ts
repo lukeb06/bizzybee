@@ -20,6 +20,25 @@ export interface IBusiness {
     lng: number;
 }
 
+export interface IBusinessForm {
+    owner_id: number;
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    zipcode: string;
+    description: string;
+    category: string;
+    price_range: string;
+    preview_image: string;
+    featured_image: string;
+    image_urls: string[];
+    lat?: string;
+    lng?: string;
+}
+
+
 export interface BusinessId {
     [id: number]: IBusiness;
 }
@@ -29,7 +48,7 @@ export interface BusinessState {
     allBusinesses: IBusiness[];
 }
 
-export interface IActionCreator {
+export interface IBusinessActionCreator {
     type: string;
     payload: IBusiness | IBusiness[];
 }
@@ -39,6 +58,7 @@ export interface ValidationErrors {
     address?: string;
     city?: string;
     state?: string;
+    country?: string;
     name?: string;
     description?: string;
     priceRange?: string;

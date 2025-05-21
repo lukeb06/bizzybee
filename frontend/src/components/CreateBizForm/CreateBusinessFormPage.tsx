@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { thunkCreateBusiness } from '../../redux/business';
-import { IBusiness, ValidationErrors } from '../../redux/types/business';
+import { IBusiness, IBusinessForm, ValidationErrors } from '../../redux/types/business';
 import './CreateBusinessForm.css';
-import { RootState } from '../../redux/store';
+import { RootState, useAppSelector } from '../../redux/store';
 
 interface ICreateBusinessError {
     name?: string;
@@ -13,6 +13,7 @@ interface ICreateBusinessError {
     state?: string;
     zipcode?: string;
     description?: string;
+    country?: string;
     priceRange?: string;
     previewImage?: string;
     submit?: string;
@@ -21,7 +22,7 @@ interface ICreateBusinessError {
 const CreateBusinessFormPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const sessionUser = useSelector((state: RootState) => state.session.user);
+    const sessionUser = useAppSelector((state: RootState) => state.session.user);
 
     const [name, setName] = useState('');
     const [country, setCountry] = useState('');
@@ -31,17 +32,18 @@ const CreateBusinessFormPage = () => {
     const [zipcode, setZipcode] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [priceRange, setPriceRange] = useState(0);
+    const [priceRange, setPriceRange] = useState('0');
     const [previewImage, setPreviewImage] = useState('');
     const [featuredImage, setFeaturedImage] = useState('');
     const [imageUrls, setImageUrls] = useState(['', '', '', '']);
-    const [lat, setLat] = useState(0);
-    const [lng, setLng] = useState(0);
+    const [lat, setLat] = useState('0');
+    const [lng, setLng] = useState('0');
     const [errors, setErrors] = useState<ICreateBusinessError>({
         name: '',
         address: '',
         city: '',
         state: '',
+        country: '',
         description: '',
         priceRange: '',
         previewImage: '',
@@ -49,12 +51,22 @@ const CreateBusinessFormPage = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrors({});
+        setErrors({
+            name: '',
+            address: '',
+            city: '',
+            state: '',
+            country: '',
+            description: '',
+            priceRange: '',
+            previewImage: '',
+        });
         const validationErrors: ValidationErrors = {};
         if (!name) validationErrors.name = 'Business name is required';
         if (!address) validationErrors.address = 'Address is required';
         if (!city) validationErrors.city = 'City is required';
         if (!state) validationErrors.state = 'State is required';
+        if (!country) validationErrors.country = 'Country is required';
         if (description.length < 30)
             validationErrors.description = 'Description needs 30 or more characters';
         if (!priceRange) validationErrors.priceRange = 'Price per night is required';
@@ -65,8 +77,8 @@ const CreateBusinessFormPage = () => {
             return;
         }
 
-        const businessData: IBusiness = {
-            owner_id: sessionUser.id,
+        const businessData: IBusinessForm = {
+            owner_id: sessionUser!.id,
             name,
             country,
             address,
@@ -113,7 +125,7 @@ const CreateBusinessFormPage = () => {
                         {errors.name && <span className="error-message">{errors.name}</span>}
                     </label>
 
-                    <label>
+                    {/* <label>
                         <div className="label-row">
                             <span>
                                 Give customers a phone number so they can call your business
@@ -125,8 +137,8 @@ const CreateBusinessFormPage = () => {
                             onChange={e => setCountry(e.target.value)}
                             placeholder="Business Phone Number"
                         />
-                    </label>
-                    <label>
+                    </label> */}
+                    {/* <label>
                         <div className="label-row">
                             <span>Do you have a business website?</span>{' '}
                         </div>
@@ -136,7 +148,7 @@ const CreateBusinessFormPage = () => {
                             onChange={e => setCountry(e.target.value)}
                             placeholder="Website (optional)"
                         />
-                    </label>
+                    </label> */}
                     <label>
                         <div>
                             <p>What kind of business are you in?</p>{' '}
@@ -148,8 +160,8 @@ const CreateBusinessFormPage = () => {
                         </div>
                         <input
                             type="text"
-                            value={country}
-                            onChange={e => setCountry(e.target.value)}
+                            value={category}
+                            onChange={e => setCategory(e.target.value)}
                             placeholder="Business Categories"
                         />
                     </label>
@@ -218,9 +230,9 @@ const CreateBusinessFormPage = () => {
                             <input
                                 className="input-box-city"
                                 type="text"
-                                value={city}
-                                onChange={e => setCity(e.target.value)}
-                                placeholder="City"
+                                value={zipcode}
+                                onChange={e => setZipcode(e.target.value)}
+                                placeholder="Zip"
                             />
                         </label>
                         <label>
@@ -234,7 +246,7 @@ const CreateBusinessFormPage = () => {
                                 className="input-box-state"
                                 type="text"
                                 value={country}
-                                onChange={e => setState(e.target.value)}
+                                onChange={e => setCountry(e.target.value)}
                                 placeholder="USA"
                             />
                         </label>
@@ -270,8 +282,9 @@ const CreateBusinessFormPage = () => {
                         features. Minimum 30 characters.
                     </p>
                     <textarea
-                        size={10}
-                        type="text"
+                        // size={10}
+                        // rows={1}
+                        // type="text"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters"
@@ -287,7 +300,12 @@ const CreateBusinessFormPage = () => {
                         Select a number that best reflects your typical pricing. 1 =
                         Budget-friendly, 5 = High-end/luxury.
                     </p>
-                    <select id="price_range" name="price_range" required>
+                    <select
+                        id="price_range"
+                        name="price_range"
+                        required
+                        onChange={(e) => setPriceRange(e.target.value)}
+                        >
                         <option value="">Select</option>
                         <option value="1">$</option>
                         <option value="2">$$</option>
@@ -300,7 +318,7 @@ const CreateBusinessFormPage = () => {
                     )}
                 </section>
 
-                <section className="iamge-section">
+                <section className="image-section">
                     <h3>Liven up your business with photos</h3>
                     <p>Add images to showcase your business — food, services, ambiance, etc.</p>
                     <input
