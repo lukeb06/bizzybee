@@ -11,7 +11,7 @@ def seed_businesses():
         city="Boston",
         state="MA",
         zipcode="12345",
-        type="restaurant",
+        category="restaurant",
         lat=43.987,
         lng=54.344,
         price_range=2,
@@ -25,15 +25,29 @@ def seed_businesses():
         city="Florida",
         state="FL",
         zipcode="12345",
-        type="takeout",
+        category="takeout",
         lat=43.987,
         lng=54.344,
         price_range=1,
         created_at=datetime.utcnow()
     )
+    biz3 = Business(
+        owner_id=2,
+        name="Sakura Sushi",
+        address="645 Main St",
+        city="Austin",
+        state="MA",
+        zipcode="12345",
+        category="restaurant",
+        lat=43.987,
+        lng=54.344,
+        price_range=3,
+        created_at=datetime.utcnow()
+    )
 
     db.session.add(biz1)
     db.session.add(biz2)
+    db.session.add(biz3)
     db.session.commit()
     
 
