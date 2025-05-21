@@ -1,4 +1,4 @@
-import { IBusiness, BusinessState, IActionCreator } from './types/business';
+import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm } from './types/business';
 
 // ============ ACTION TYPES =================
 export const GET_ALL_BUSINESSES = 'businesses/getAllBusinesses';
@@ -37,7 +37,7 @@ export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
 
 // Create a new business
 export const thunkCreateBusiness =
-    (businessData: IBusiness): any =>
+    (businessData: IBusinessForm): any =>
     async (dispatch: any) => {
         try {
             const response = await fetch('/api/businesses', {
@@ -67,31 +67,30 @@ const initialState: BusinessState = {
 
 export default function businessReducer(
     state = initialState,
-    action: IActionCreator,
+    action: IBusinessActionCreator,
 ): BusinessState {
     let newState = {
         ...state,
     };
+    let newById = {...newState.byId};
+    let allBusiness = [...newState.allBusinesses];
 
     switch (action.type) {
-        case GET_ALL_BUSINESSES: {
+        case GET_ALL_BUSINESSES:
             if (Array.isArray(action.payload)) {
                 const businesses = action.payload;
-
-                const newById = { ...newState.byId };
                 businesses.forEach((b: IBusiness) => {
                     newById[b.id] = b;
                 });
+                allBusiness = action.payload;
 
                 newState.byId = newById;
-                newState.allBusinesses = businesses;
-
+                newState.allBusinesses = allBusiness;
                 return newState;
+            } else {
+                return state;
             }
-            return state;
-        }
-
-        case CREATE_BUSINESS: {
+        case CREATE_BUSINESS:
             if (!Array.isArray(action.payload)) {
                 const newBusiness = action.payload;
                 newState.allBusinesses = [...newState.allBusinesses, newBusiness];
@@ -100,8 +99,6 @@ export default function businessReducer(
                 return newState;
             }
             return state;
-        }
-
         default:
             return state;
     }

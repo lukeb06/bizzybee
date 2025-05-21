@@ -29,33 +29,42 @@ def businesses():
     businesses = query.all()
     if (name or category or max_price) and not businesses:
         return jsonify({"message": "No businesses found matching your search."}), 404
-    
+
     # Get all businesses with reviews and images
     businesses = Business.query.options(
-        db.joinedload(Business.images),
-        db.subqueryload(Business.reviews)
+        db.joinedload(Business.images), db.subqueryload(Business.reviews)
     ).all()
 
     response = []
     for b in businesses:
-        preview = next((img for img in b.images if getattr(img, 'is_preview', False)), None)
-        featured = next((img for img in b.images if getattr(img, 'is_featured', False)), None)
+        preview = next(
+            (img for img in b.images if getattr(img, "is_preview", False)), None
+        )
+        featured = next(
+            (img for img in b.images if getattr(img, "is_featured", False)), None
+        )
         review_count = len(b.reviews)
-        avg_rating = round(sum([r.stars for r in b.reviews]) / review_count,1) if review_count > 0 else None
+        avg_rating = (
+            round(sum([r.stars for r in b.reviews]) / review_count, 1)
+            if review_count > 0
+            else None
+        )
 
-        response.append({
-            'id': b.id,
-            'name':b.name,
-            'category': b.category,
-            'address':b.address,
-            'city': b.city,
-            'state': b.state,
-            'price_range': b.price_range,
-            'preview_image' : preview.url if preview else None,
-            'featured_image' : featured.url if featured else None,
-            'average_rating': avg_rating,
-            'review_count': review_count
-        })
+        response.append(
+            {
+                "id": b.id,
+                "name": b.name,
+                "category": b.category,
+                "address": b.address,
+                "city": b.city,
+                "state": b.state,
+                "price_range": b.price_range,
+                "preview_image": preview.url if preview else None,
+                "featured_image": featured.url if featured else None,
+                "average_rating": avg_rating,
+                "review_count": review_count,
+            }
+        )
     return jsonify(response)
 
 
@@ -76,7 +85,9 @@ def create_business():
     Create a business
     """
 
-    data = request.get_json()
+    # data = request.get_json()
+    # blocked
+    form["csrf_token"].data = request.cookies["csrf_token"]
     business = Business(
         owner_id=current_user.id,
         name=data.get("name"),
@@ -98,9 +109,7 @@ def create_business():
 
     # add featured image
     featured_image = Image(
-        business_id=business_id,
-        url=data.get("featured_image"),
-        is_featured=True
+        business_id=business_id, url=data.get("featured_image"), is_featured=True
     )
 
     db.session.add(featured_image)
@@ -108,9 +117,7 @@ def create_business():
 
     # add preview image
     preview_image = Image(
-        business_id=business_id,
-        url=data.get("preview_image"),
-        is_preview=True
+        business_id=business_id, url=data.get("preview_image"), is_preview=True
     )
 
     db.session.add(preview_image)
@@ -120,21 +127,11 @@ def create_business():
     image_urls = data.get("image_urls", [])
     for url in image_urls:
         image = Image(
-            business_id=business_id,
-            url=url,
-            is_featured=False,
-            is_preview=False
+            business_id=business_id, url=url, is_featured=False, is_preview=False
         )
         db.session.add(image)
 
     db.session.commit()
-
-    
-
-
-
-
-    
 
     return jsonify(business.to_dict())
 
@@ -146,13 +143,13 @@ def update_business(id):
     Update a business
     """
     business = Business.query.get(id)
-    
+
     if not business:
         return {"errors": {"message": "Business not found"}}, 404
-    
+
     if business.owner_id != current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
-    
+
     data = request.get_json()
     business.name = data.get("name", business.name)
     business.country = data.get("country", business.country)
@@ -161,10 +158,10 @@ def update_business(id):
     business.state = data.get("state", business.state)
     business.zipcode = data.get("zipcode", business.zipcode)
     business.category = data.get("category", business.category)
-    business.description=data.get("description",business.description)
+    business.description = data.get("description", business.description)
     business.price_range = data.get("price_range", business.price_range)
-    business.lat=data.get("lat",business.lat)
-    business.lng=data.get("lng",business.lng)
+    business.lat = data.get("lat", business.lat)
+    business.lng = data.get("lng", business.lng)
 
     db.session.commit()
     return jsonify(business.todict())
@@ -180,10 +177,10 @@ def delete_business(id):
 
     if not business:
         return {"errors": {"message": "Business not found"}}, 404
-    
+
     if business.owner_id != current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
-    
+
     db.session.delete(business)
     db.session.commit()
     return {"message": "Successfully deleted"}

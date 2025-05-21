@@ -30,6 +30,10 @@ export const router = createBrowserRouter([
                 path: '/business/:businessId',
                 element: <BusinessDetailPage />,
             },
+            {
+                path: '*',
+                element: <h1>404 Not Found</h1>
+            }
         ],
     },
 ]);

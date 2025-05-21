@@ -2,7 +2,8 @@ from app.models import db, User, Business, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
 
-# Add businesses 
+
+# Add businesses
 def seed_businesses():
     biz1 = Business(
         owner_id=1,
@@ -15,7 +16,7 @@ def seed_businesses():
         lat=43.987,
         lng=54.344,
         price_range=2,
-        created_at=datetime.utcnow()
+        created_at=datetime.utcnow(),
     )
 
     biz2 = Business(
@@ -29,7 +30,7 @@ def seed_businesses():
         lat=43.987,
         lng=54.344,
         price_range=1,
-        created_at=datetime.utcnow()
+        created_at=datetime.utcnow(),
     )
     biz3 = Business(
         owner_id=2,
@@ -38,22 +39,24 @@ def seed_businesses():
         city="Austin",
         state="MA",
         zipcode="12345",
-        category="restaurant",
+        category="Up-Scale",
         lat=43.987,
         lng=54.344,
         price_range=3,
-        created_at=datetime.utcnow()
+        created_at=datetime.utcnow(),
     )
 
     db.session.add(biz1)
     db.session.add(biz2)
     db.session.add(biz3)
     db.session.commit()
-    
+
 
 def undo_businesses():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.businesses RESTART IDENTITY CASCADE;")
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.businesses RESTART IDENTITY CASCADE;"
+        )
     else:
         db.session.execute(text("DELETE FROM businesses"))
         db.session.execute(text("ALTER SEQUENCE businesses_id_seq RESTART WITH 1"))
