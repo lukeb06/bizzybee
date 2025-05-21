@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReviewStar from '../ReviewStar/ReviewStar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../redux/store';
 import Reviews from '../Reviews/Reviews';
 
 const BusinessDetailPage: React.FC = () => {
 
+    const navigate = useNavigate();
+    const { businessId } = useParams();
 
-    const {businessId} = useParams();
-    const business = useAppSelector((state) => state.businesses.byId[businessId])
+    const [isLoaded, setIsLoaded] = useState(false);
+    const business = useAppSelector((state) => state.businesses.byId[Number(businessId)])
+
 
 
     const fakeBusiness = {
@@ -31,9 +34,9 @@ const BusinessDetailPage: React.FC = () => {
 
     let reviewCount = 0;
 
-    const checkReviewCount = (reviews:string): string | void => {
+    const checkReviewCount = (reviews: string): string | void => {
         const reviewNum = parseInt(reviews);
-        if(reviewNum > 5 || reviewNum < 1){
+        if (reviewNum > 5 || reviewNum < 1) {
             return "error. todo later"
         } else {
             reviewCount = reviewNum;
@@ -47,36 +50,53 @@ const BusinessDetailPage: React.FC = () => {
         "Food tasted great"
     ]
 
-    return (
-        <div>
-            <h1>{business.name}</h1>
-            {/* Dev items, please delete if not needed, or adjust */}
-            <button onClick={(e) => handleDeleteBusiness(e) }>Delete a businesss</button>
-            <button onClick={(e) => handleUpdateBusiness(e)}>Update a business</button>
-            {/* --------- */}
-            {/* {fakeBusiness.images.map((url, key) => (
+
+    useEffect(() => {
+        console.log(typeof businessId, "what is this?")
+        if ((businessId === '0')) {
+            console.log(businessId, "here")
+            navigate('/')
+            setIsLoaded(false);
+        } else {
+            setIsLoaded(true);
+        }
+    }, [isLoaded])
+
+    if (!isLoaded) {
+        return null
+    } else {
+
+        return (
+            <div>
+                <h1>{business.name}</h1>
+                {/* Dev items, please delete if not needed, or adjust */}
+                <button onClick={(e) => handleDeleteBusiness(e)}>Delete a businesss</button>
+                <button onClick={(e) => handleUpdateBusiness(e)}>Update a business</button>
+                {/* --------- */}
+                {/* {fakeBusiness.images.map((url, key) => (
                 <div key={`${key}-${url}`}>
-                    <img src={url} style={{height: '200px', width: '200px'}} />
+                <img src={url} style={{height: '200px', width: '200px'}} />
                 </div>
-            ))} */}
-            <div>
-                <img src={business.featured_image} style={{ height: '200px', width: '200px' }} />
-            </div>
-            <div>
-                <img src={business.preview_image} style={{ height: '200px', width: '200px' }} />
-            </div>
-            {typeof checkReviewCount(business.review_count) === 'string' ?
-            <div>
-                <span>errors</span>
-            </div>
-            :
-                <ReviewStar reviewCount={business.average_rating} />
-            }
+                ))} */}
+                <div>
+                    <img src={business.featured_image} style={{ height: '200px', width: '200px' }} />
+                </div>
+                <div>
+                    <img src={business.preview_image} style={{ height: '200px', width: '200px' }} />
+                </div>
+                {typeof checkReviewCount(business.review_count) === 'string' ?
+                    <div>
+                        <span>errors</span>
+                    </div>
+                    :
+                    <ReviewStar reviewCount={business.average_rating} />
+                }
 
-        <Reviews reviews={fakeReviews} />
+                <Reviews reviews={fakeReviews} />
 
-        </div>
-    );
+            </div>
+        );
+    }
 };
 
 export default BusinessDetailPage;

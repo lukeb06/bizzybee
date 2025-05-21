@@ -25,7 +25,7 @@ export default function ViewAllBusinessesPage() {
         }
     }, [dispatch, businesses, isLoaded]);
 
-    const goToSpotDetail = (e: React.MouseEvent<HTMLAnchorElement>, business: { id: number }) => {
+    const goToSpotDetail = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent>, business: { id: number }) => {
         e.preventDefault();
         navigate(`/business/${business.id}`);
     };
