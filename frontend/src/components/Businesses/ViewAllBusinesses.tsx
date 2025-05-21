@@ -4,6 +4,7 @@ import './ViewAllBusinesses.css';
 import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReviewStar from '../ReviewStar/ReviewStar';
 
 export default function ViewAllBusinessesPage() {
     const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
@@ -65,14 +66,15 @@ export default function ViewAllBusinessesPage() {
                                         <div className="biz-title">
                                             <h2>{business.name}</h2>
                                         </div>
-                                        <div className="star-rating">
+                                        {/* <div className="star-rating">
                                             <span>
                                                 {business.average_rating
                                                     ? parseFloat(business.average_rating).toFixed(1)
                                                     : 'New'}{' '}
                                             </span>
                                             <span className="review-count">(42 reviews)</span>
-                                        </div>
+                                        </div> */}
+                                        <ReviewStar reviewCount={business.average_rating} />
                                         <div className="biz-hour"></div>
                                         <div className="location-price-hour">
                                             <span>
