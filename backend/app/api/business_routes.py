@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from app.models import Business, Review, Image
 from flask_login import login_required, current_user
 from app.models.db import db
+from app.forms import BusinessForm
 
 business_routes = Blueprint("business", __name__, url_prefix="/business")
 
@@ -81,6 +82,7 @@ def business(id: int):
 @business_routes.route("/", methods=["POST"])
 @login_required
 def create_business():
+    form = BusinessForm()
     """
     Create a business
     """
