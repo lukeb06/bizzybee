@@ -1,17 +1,21 @@
-import { IReview, ReviewState, IReviewActionCreator, IReviewForm, IReviewBusinessId } from './types/review';
+import { IReview, ReviewAction, ReviewState, IReviewForm, IReviewBusinessId, IReviewId} from './types/review';
 
 // ============ ACTION TYPES =================
 export const GET_ALL_REVIEWS = 'reviews/getAllReviews';
 export const CREATE_REVIEW = 'reviews/createReview';
 export const DELETE_REVIEW = 'reviews/deleteReview'
 // ============ ACTION CREATOR =================
-const getAllReviewsAction = (reviews: IReview[]) => ({
+const getAllReviewsAction = (reviews: IReview[]): ReviewAction => ({
     type: GET_ALL_REVIEWS,
     payload: reviews,
 });
 
-const createReviewAction = (review: IReview) => ({
+const createReviewAction = (review: IReview): ReviewAction => ({
     type: CREATE_REVIEW,
+    payload: review,
+});
+const deleteReviewAction = (review: IReviewId): ReviewAction => ({
+    type: DELETE_REVIEW,
     payload: review,
 });
 
@@ -37,28 +41,62 @@ export const thunkGetAllReviews = (id: IReviewBusinessId): any => async (dispatc
 // Create a new review
 export const thunkCreateReview =
     (reviewData: IReviewForm, id: IReviewBusinessId): any =>
-    async (dispatch: any) => {
-        try {
-            const response = await fetch(`/api/reviews/business/${id}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(reviewData),
-            });
-            if (response.ok) {
-                const data = await response.json();
-                dispatch(createReviewAction(data));
-                return data;
-            } else {
-                throw response;
+        async (dispatch: any) => {
+            try {
+                const response = await fetch(`/api/reviews/business/${id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reviewData),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(createReviewAction(data));
+                    return data;
+                } else {
+                    throw response;
+                }
+            } catch (e) {
+                const err = e as Response;
+                const errorMessages = await err.json();
+                return errorMessages;
             }
-        } catch (e) {
-            const err = e as Response;
-            const errorMessages = await err.json();
-            return errorMessages;
-        }
-    };
+        };
+        export const thunkDeleteReview =
+    (id: IReviewId): any =>
+        async (dispatch: any) => {
+            try {
+                const response = await fetch(`/api/reviews/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(deleteReviewAction(id));
+                    return data;
+                } else {
+                    throw response;
+                }
+            } catch (e) {
+                const err = e as Response;
+                const errorMessages = await err.json();
+                return errorMessages;
+            }
+        };
+        export const thunkEditReview = (reviewToEdit: IReview) => async (dispatch: any) => {
+          const { id, review, stars } = reviewToEdit;
+          const response = await fetch(`/api/reviews/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              review,
+              stars
+            })
+          });
+          const data = await response.json();
+          dispatch(getAllReviewsAction(data));
+          return data;
+        };
 
-// ============ REDUCER =================
+
 const initialState: ReviewState = {
     byId: {},
     allReviews: [],
@@ -66,12 +104,12 @@ const initialState: ReviewState = {
 
 export default function reviewReducer(
     state = initialState,
-    action: IReviewActionCreator,
+    action: ReviewAction,
 ): ReviewState {
     let newState = {
         ...state,
     };
-    let newById = {...newState.byId};
+    let newById = { ...newState.byId };
     let allReview = [...newState.allReviews];
 
     switch (action.type) {
@@ -98,6 +136,16 @@ export default function reviewReducer(
                 return newState;
             }
             return state;
+        case DELETE_REVIEW:
+            if (!Array.isArray(action.payload)) {
+            const review = action.payload;
+            allReview = newState.allReviews.filter((element) => element.id !== review.id)
+            delete newState.byId[review.id]
+            newState.allReviews = allReview;
+            return newState;
+            }
+            return state;
+
         default:
             return state;
     }
