@@ -20,6 +20,7 @@ def reviews(business_id: int):
 @login_required
 def post_reviews(business_id: int):
     form = ReviewForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
         review = Review(
             user_id=current_user.id,
@@ -30,14 +31,15 @@ def post_reviews(business_id: int):
         reviews = Review.query.filter(
             Review.user_id == current_user.id, Review.business_id == business_id
         ).all()
+
         if reviews:
             return {
                 "errors": {"message": "User has already reviewed the business"}
             }, 401
-
         db.session.add(review)
         db.session.commit()
         return review.to_dict()
+    
     return form.errors, 401
 
 

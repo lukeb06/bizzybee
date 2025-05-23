@@ -20,7 +20,7 @@ def seed_businesses():
     )
 
     biz2 = Business(
-        owner_id=1,
+        owner_id=2,
         name="Urban Coffee",
         address="456 Ocean St",
         city="Florida",
@@ -34,12 +34,12 @@ def seed_businesses():
     )
     biz3 = Business(
         owner_id=2,
-        name="Sakura Sushi",
+        name="Hot Chicken",
         address="645 Main St",
         city="Austin",
         state="MA",
         zipcode="12345",
-        category="Up-Scale",
+        category="delivery",
         lat=43.987,
         lng=54.344,
         price_range=3,
