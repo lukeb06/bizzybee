@@ -1,30 +1,28 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, TextAreaField, SelectField
-from wtfforms.validators import DataRequired, ValidationError, length, Email
+from wtforms import StringField, TextAreaField, SelectField, IntegerField, FieldList
+from wtforms.validators import DataRequired, ValidationError, Length, Email
 from app.models import Business
 
-def validate_business_name(form, field):
-    if field.data < 2:
-        raise ValidationError("Business name must be at least 2 characters long.")
-
-def validate_phone_number(form, field):
-    if not field.data.isdigit():
-        raise ValidationError("Phone number must contain only digits.")
+# def validate_business_name(form, field):
+#     if field.data < 2:
+#         raise ValidationError("Business name must be at least 2 characters long.")
 
 
 class BusinessForm(FlaskForm):
-    name = StringField("Business Name", validators=[DataRequired(), length(2, 100), validate_business_name])
-    description = TextAreaField("Business Description", validators=[DataRequired(), length(1, 1000)])
-    industry = SelectField("Industry", choices=[
-        ("Technology"),
-        ("Retail"),
-        ("Finance"),
-        ("Healthcare"),
-        ("Cafe"),
-        ("Fastfood"),
-        ("Takeout")
-
-    ], validators=[DataRequired()])
-    email = StringField("Contact Email", validators=[DataRequired(), Email()])
-    phone = StringField("Contact Phone", validators=[DataRequired(), length(10, 200), validate_phone_number])
+    name = StringField("Business Name", validators=[DataRequired(), Length(2, 100)])
+    description = TextAreaField("Business Description", validators=[DataRequired(), Length(1, 1000)])
+    country = StringField("Country", validators=[DataRequired()])
+    address = StringField("Address", validators=[DataRequired()])
+    city = StringField("City", validators=[DataRequired()])
+    state = StringField("State", validators=[DataRequired()])
+    zipcode = StringField("Zipcode", validators=[DataRequired()])
+    category = StringField("Category", validators=[DataRequired()])
+    price_range = IntegerField("Price Range", validators=[DataRequired()])
+    featured_image = StringField("Feature Image", validators=[DataRequired()])
+    preview_image = StringField("Preview Image", validators=[DataRequired()])
+    image_urls = FieldList(
+        StringField("Image URL", validators=[DataRequired()]),
+        min_entries=1,
+        label="Image URLs"
+    )

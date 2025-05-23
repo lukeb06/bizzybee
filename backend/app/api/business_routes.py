@@ -82,60 +82,59 @@ def business(id: int):
 @business_routes.route("/", methods=["POST"])
 @login_required
 def create_business():
-    form = BusinessForm()
     """
     Create a business
-    """
-
-    # data = request.get_json()
-    # blocked
+    """   
+    form = BusinessForm()
+    data = request.get_json()
+    form.process(data=data)
     form["csrf_token"].data = request.cookies["csrf_token"]
-    business = Business(
-        owner_id=current_user.id,
-        name=data.get("name"),
-        country=data.get("country"),
-        address=data.get("address"),
-        city=data.get("city"),
-        state=data.get("state"),
-        zipcode=data.get("zipcode"),
-        category=data.get("category"),
-        description=data.get("description"),
-        price_range=data.get("price_range"),
-        lat=data.get("lat"),
-        lng=data.get("lng"),
-    )
-    db.session.add(business)
-    db.session.commit()
 
-    business_id = business.id
-
-    # add featured image
-    featured_image = Image(
-        business_id=business_id, url=data.get("featured_image"), is_featured=True
-    )
-
-    db.session.add(featured_image)
-    db.session.commit()
-
-    # add preview image
-    preview_image = Image(
-        business_id=business_id, url=data.get("preview_image"), is_preview=True
-    )
-
-    db.session.add(preview_image)
-    db.session.commit()
-
-    # add other images
-    image_urls = data.get("image_urls", [])
-    for url in image_urls:
-        image = Image(
-            business_id=business_id, url=url, is_featured=False, is_preview=False
+    if form.validate_on_submit():
+        business = Business(
+            owner_id=current_user.id,
+            name=form.data.get("name"),
+            country=form.data.get("country"),
+            address=form.data.get("address"),
+            city=form.data.get("city"),
+            state=form.data.get("state"),
+            zipcode=form.data.get("zipcode"),
+            category=form.data.get("category"),
+            description=form.data.get("description"),
+            price_range=form.data.get("price_range")
         )
+
+        db.session.add(business)
+
+        db.session.flush()
+        business_id = business.id
+
+        # add featured image
+        featured_image = Image(
+            business_id=business_id, url=form.data.get("featured_image"), is_featured=True, is_preview=False
+        )
+
+        db.session.add(featured_image)
+
+        # add preview image
+        preview_image = Image(
+            business_id=business_id, url=form.data.get("preview_image"), is_preview=True, is_featured=False
+        )
+
+        db.session.add(preview_image)
+
+        # add other images
+        image_urls = form.data.get("image_urls", [])
+        for url in image_urls:
+            image = Image(
+                business_id=business_id, url=url, is_featured=False, is_preview=False
+            )
         db.session.add(image)
 
-    db.session.commit()
-
-    return jsonify(business.to_dict())
+        db.session.commit()
+        return jsonify(business.to_dict()), 201
+    else:
+        return jsonify({"errors": form.errors}), 401
 
 
 @business_routes.route("/<id>", methods=["PUT"])
