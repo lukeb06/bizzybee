@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.models import Image, db
 from flask_login import login_required, current_user
+
+
 image_routes = Blueprint("image", __name__, url_prefix="/images")
 
 
