@@ -8,10 +8,12 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import businessReducer from './business';
+import reviewReducer from './review';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     businesses: businessReducer,
+    review: reviewReducer
 });
 
 let enhancer;
