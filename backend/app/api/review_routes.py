@@ -6,7 +6,7 @@ from app.forms import ReviewForm
 from flask_login import login_required, current_user
 
 
-review_routes = Blueprint("review", __name__, url_prefix="/reviews")
+review_routes = Blueprint("review", __name__)
 
 
 @review_routes.route("/business/<business_id>", methods=["GET"])
@@ -39,7 +39,7 @@ def post_reviews(business_id: int):
         db.session.add(review)
         db.session.commit()
         return review.to_dict()
-    
+
     return form.errors, 401
 
 
@@ -62,7 +62,6 @@ def delete_review(review_id: int):
 
 @review_routes.route("/<review_id>", methods=["PUT"])
 @login_required
-
 def edit_review(review_id: int):
     review = Review.query.get(review_id)
 

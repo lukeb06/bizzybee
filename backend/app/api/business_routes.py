@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request
-from app.models import Business, Review, Image
+from app.models import Business, Image
 from flask_login import login_required, current_user
 from app.models.db import db
 from app.forms import BusinessForm
 
-business_routes = Blueprint("business", __name__, url_prefix="/business")
+business_routes = Blueprint("business", __name__)
 
 
 @business_routes.route("/", methods=["GET"])
@@ -84,7 +84,7 @@ def business(id: int):
 def create_business():
     """
     Create a business
-    """   
+    """
     form = BusinessForm()
     data = request.get_json()
     form.process(data=data)
@@ -101,7 +101,7 @@ def create_business():
             zipcode=form.data.get("zipcode"),
             category=form.data.get("category"),
             description=form.data.get("description"),
-            price_range=form.data.get("price_range")
+            price_range=form.data.get("price_range"),
         )
 
         db.session.add(business)
@@ -111,14 +111,20 @@ def create_business():
 
         # add featured image
         featured_image = Image(
-            business_id=business_id, url=form.data.get("featured_image"), is_featured=True, is_preview=False
+            business_id=business_id,
+            url=form.data.get("featured_image"),
+            is_featured=True,
+            is_preview=False,
         )
 
         db.session.add(featured_image)
 
         # add preview image
         preview_image = Image(
-            business_id=business_id, url=form.data.get("preview_image"), is_preview=True, is_featured=False
+            business_id=business_id,
+            url=form.data.get("preview_image"),
+            is_preview=True,
+            is_featured=False,
         )
 
         db.session.add(preview_image)
