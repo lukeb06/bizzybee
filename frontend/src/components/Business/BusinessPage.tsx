@@ -14,12 +14,12 @@ const BusinessDetailPage: React.FC = () => {
 
 
 
-    const fakeBusiness = {
-        title: "Tabla Indian Cafe & Sweets Orlando",
-        reviews: "5.0",
-        category: "Indian",
-        images: ['https://rasushi.com/wp-content/uploads/2023/03/DSC08947_SUSHI-PLATTER.jpg']
-    }
+    // const fakeBusiness = {
+    //     title: "Tabla Indian Cafe & Sweets Orlando",
+    //     reviews: "5.0",
+    //     category: "Indian",
+    //     images: ['https://rasushi.com/wp-content/uploads/2023/03/DSC08947_SUSHI-PLATTER.jpg']
+    // }
 
     const handleDeleteBusiness = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -44,11 +44,11 @@ const BusinessDetailPage: React.FC = () => {
     }
 
     console.log(business)
-    const fakeReviews = [
-        "Hello",
-        "Bye",
-        "Food tasted great"
-    ]
+    // const fakeReviews = [
+    //     "Hello",
+    //     "Bye",
+    //     "Food tasted great"
+    // ]
 
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const BusinessDetailPage: React.FC = () => {
                     <ReviewStar reviewCount={business.average_rating} />
                 }
 
-                <Reviews reviews={fakeReviews} />
+                <Reviews business={business} />
 
             </div>
         );

@@ -24,7 +24,7 @@ const deleteReviewAction = (review: IReviewId): ReviewAction => ({
 // Get all reviews
 export const thunkGetAllReviews = (id: IReviewBusinessId): any => async (dispatch: any) => {
     try {
-        const response = await fetch(`/api/reviews/business/${id}`);
+        const response = await fetch(`/api/reviews/business/${id.id}`);
         if (response.ok) {
             const data = await response.json();
             dispatch(getAllReviewsAction(data));
