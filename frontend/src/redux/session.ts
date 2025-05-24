@@ -15,7 +15,11 @@ const removeUser = () => ({
 
 export const thunkAuthenticate = (): any => async (dispatch: any) => {
     try {
-        const response = await fetch('/api/auth/');
+        const response = await fetch('/api/auth/',
+            {
+                credentials: "include"
+            }
+        );
         if (response.ok) {
             const data = await response.json();
             if (data.errors) {
@@ -33,49 +37,53 @@ export const thunkAuthenticate = (): any => async (dispatch: any) => {
 
 export const thunkLogin =
     (credentials: ICredentials): any =>
-    async (dispatch: any) => {
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(credentials),
-            });
-            console.log(response);
-            if (response.ok) {
-                const data = await response.json();
-                dispatch(setUser(data));
-                return response;
-            } else {
-                throw response;
+        async (dispatch: any) => {
+            try {
+                const formData = new FormData();
+                formData.append('email', credentials.email);
+                formData.append('password', credentials.password);
+
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: "include"
+                });
+                console.log(response);
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setUser(data));
+                    return response;
+                } else {
+                    throw response;
+                }
+            } catch (e) {
+                const err = e as Response;
+                const errorMessages = await err.json();
+                return errorMessages;
             }
-        } catch (e) {
-            const err = e as Response;
-            const errorMessages = await err.json();
-            return errorMessages;
-        }
-    };
+        };
 
 export const thunkSignup =
     (user: ISignUpUser): any =>
-    async (dispatch: any) => {
-        try {
-            const response = await fetch('/api/auth/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user),
-            });
+        async (dispatch: any) => {
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user),
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                dispatch(setUser(data));
-            } else {
-                throw response;
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setUser(data));
+                } else {
+                    throw response;
+                }
+            } catch (e) {
+                const err = e as Response;
+                return await err.json();
             }
-        } catch (e) {
-            const err = e as Response;
-            return await err.json();
-        }
-    };
+        };
 
 export const thunkLogout = (): any => async (dispatch: any) => {
     try {
