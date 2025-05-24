@@ -3,6 +3,8 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import OpenModalButton from '../OpenModalButton';
+import SignupFormModal from '../SignupFormModal';
 
 function Navigation(): JSX.Element {
     const sessionUser = useSelector((state: RootState) => state.session.user);
@@ -10,6 +12,7 @@ function Navigation(): JSX.Element {
     return (
         <nav className="nav-bar">
             <div className="nav-left">
+                <img src="https://static-00.iconduck.com/assets.00/yelp-icon-2048x2048-ys10gku9.png" alt="yelp logo" className="yelp-logo"/>
                 <NavLink to="/">Home</NavLink>
             </div>
 
@@ -22,7 +25,23 @@ function Navigation(): JSX.Element {
                     )}
                 </div>
                 <div>
-                    <ProfileButton />
+                    {sessionUser && (
+                        <ProfileButton />
+                    )}
+                </div>
+                <div>
+                    {!sessionUser && (
+                        <div>
+                        <NavLink to="/login">Log In</NavLink>
+                           <OpenModalButton
+                  buttonText="Sign Up"
+                  onButtonClick={()=>{
+                    }}
+                  onModalClose={undefined}
+                  modalComponent={<SignupFormModal/>}
+                />
+                </div>
+                    )}
                 </div>
             </div>
         </nav>
