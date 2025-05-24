@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
 import ViewAllBusinessesPage from '../components/Businesses';
 import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
@@ -16,13 +15,10 @@ export const router = createBrowserRouter([
                 element: <ViewAllBusinessesPage />,
             },
             {
-                path: 'login',
+                path: '/login',
                 element: <LoginFormPage />,
             },
-            {
-                path: 'signup',
-                element: <SignupFormPage />,
-            },
+            
             {
                 path: '/create-business',
                 element: <CreateBusinessFormPage />,

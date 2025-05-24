@@ -5,7 +5,9 @@ export interface IReview {
     user_id: number,
     review: string,
     business_id: number,
-    stars: number
+    stars: number,
+    created_at: string,
+    updated_at: string
 }
 
 export interface IReviewForm {
@@ -21,19 +23,20 @@ export interface IReviewId {
 
 
 
+
 export interface ReviewState {
     byId: ReviewId;
     allReviews: IReview[];
 }
 
 interface Action<Type extends string, Payload> {
-  type: Type;
-  payload: Payload;
+    type: Type;
+    payload: Payload;
 }
 
 export type GetAllReviews = Action<typeof GET_ALL_REVIEWS, IReview[]>;
-export type CreateReview  = Action<typeof CREATE_REVIEW,  IReview>;
-export type DeleteReview  = Action<typeof DELETE_REVIEW,  IReviewId>;
+export type CreateReview = Action<typeof CREATE_REVIEW, IReview>;
+export type DeleteReview = Action<typeof DELETE_REVIEW, IReviewId>;
 
 
 export type ReviewAction = GetAllReviews | CreateReview | DeleteReview;
