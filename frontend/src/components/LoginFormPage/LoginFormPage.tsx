@@ -22,8 +22,8 @@ function LoginFormPage() {
 
     const serverResponse = await dispatch(
       thunkLogin({
-        credential: email,
-        password,
+        email: email,
+        password: password,
       })
     );
 
