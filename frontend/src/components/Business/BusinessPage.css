@@ -1,0 +1,10 @@
+.image-gallery {
+    position: relative;
+    display: flex;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
