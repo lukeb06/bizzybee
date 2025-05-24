@@ -23,7 +23,6 @@ function LoginFormModal():JSX.Element {
     e.preventDefault();
     const serverResponse = await dispatch(
       thunkLogin({
-        credential,
         email,
         password,
       })

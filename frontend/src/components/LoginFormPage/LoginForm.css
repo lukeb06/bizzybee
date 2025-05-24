@@ -42,3 +42,14 @@
     padding: 0
 
 }
+#demo-login-button {
+    border: none;
+    color: rgb(138, 138, 138);
+    background-color: white;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#demo-login-button:hover {
+    color: navy;
+}
