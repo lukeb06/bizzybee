@@ -32,13 +32,9 @@ export const router = createBrowserRouter([
                 element: <BusinessDetailPage />,
             },
             {
-                path: '/images',
-                element: <ViewAllImagesPage />,
-            },
-            {
                 path: '*',
-                element: <h1>404 Not Found</h1>
-            }
+                element: <h1>404 Not Found</h1>,
+            },
         ],
     },
 ]);
