@@ -35,34 +35,39 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="login-container">
       {errors.length > 0 &&
-        errors.map((message:string) => <p key={message}>{message}</p>)}
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label>
-          Email
+        errors.map((message: string) => <p key={message}>{message}</p>)}
+      <form onSubmit={(e) => handleSubmit(e)} className="login-form">
+        <h1 className="login-title">Log In To Yelp</h1>
+        <p className="login-text">By continuing, you agree to Yelp’s Terms of Service and acknowledge Yelp’s Privacy Policy.</p>
+        
+          
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="email"
+            className="login-input"
             required
           />
-        </label>
+       
         {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
+       
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="password"
+            className="login-input"
           />
-        </label>
+       
         {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-button">Log In</button>
       </form>
-    </>
+      <div className="yelp-image-container"><img src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png" className="yelp-login-image" /></div>
+    </div>
   );
 }
 

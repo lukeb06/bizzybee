@@ -1,8 +1,8 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { thunkGetAllReviews } from '../../redux/review';
-import { IReview } from '../../redux/types/review';
+import { thunkGetAllReviews, thunkDeleteReview } from '../../redux/review';
+import { IReview, IReviewId } from '../../redux/types/review';
 import { IBusiness } from '../../redux/types/business';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import OpenModalButton from '../OpenModalButton';
@@ -54,6 +54,11 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
               {sessionUser?.id === review.user_id && (
                 <OpenModalButton
                   buttonText="Delete"
+                  onButtonClick={()=>{
+                    dispatch(thunkDeleteReview({id: review.id}))
+                  }}
+                  onModalClose={null}
+                  modalComponent={null}
                 />
               )}
             </div>

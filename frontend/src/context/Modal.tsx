@@ -4,13 +4,11 @@ import './Modal.css';
 
 
 interface IModalContextProps {
-  value: string;
-  updateValue: (newValue: string) => void;
-  modalRef?: any;
-  modalContent?:any;
-  closeModal?: any;
-  setModalContent?: any;
-  setOnModalClose?: any;
+  modalRef?: React.RefObject<HTMLDivElement>;
+  modalContent: JSX.Element | null;
+  closeModal: () => void;
+  setModalContent: (content: React.ReactNode | null) => void;
+  setOnModalClose: (cb: (() => void) | null) => void;
 }
 
 interface IModalProviderProps {
@@ -24,13 +22,16 @@ interface IModalClose {
 
 
 const ModalContext = createContext<IModalContextProps>({
-  value: "",
-  updateValue: () => {}
+  modalRef: undefined,
+  modalContent: null,
+  closeModal: () => {},
+  setModalContent: () => {},
+  setOnModalClose: () => {}
 });
 
 
-export function ModalProvider({ children }: IModalProviderProps):JSX.Element {
-  const modalRef:any = useRef();
+export function ModalProvider({ children }: IModalProviderProps): JSX.Element {
+  const modalRef: any = useRef();
   const [modalContent, setModalContent] = useState(null);
   // callback function that will be called when modal is closing
   const [onModalClose, setOnModalClose] = useState<IModalClose | any>(null);
@@ -45,7 +46,7 @@ export function ModalProvider({ children }: IModalProviderProps):JSX.Element {
     }
   };
 
-  const contextValue:any = {
+  const contextValue: any = {
     modalRef, // reference to modal div
     modalContent, // React component to render inside modal
     setModalContent, // function to set the React component to render inside modal
