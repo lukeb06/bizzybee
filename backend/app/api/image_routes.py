@@ -15,7 +15,7 @@ def images(business_id: int):
 # add an image to a business
 
 
-@image_routes.route("/business/<business_id>", method=["POST"])
+@image_routes.route("/business/<business_id>", methods=["POST"])
 @login_required
 def add_image(business_id):
     data = request.get_json()
@@ -37,7 +37,7 @@ def add_image(business_id):
 @image_routes.route("/<image_id>", methods=["DELETE"])
 @login_required
 def delete_image(image_id):
-    image = image.query.get(image_id)
+    image = Image.query.get(image_id)
 
     if not image:
         return jsonify({"error": "Image not found"}), 404
