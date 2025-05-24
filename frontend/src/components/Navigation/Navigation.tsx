@@ -8,7 +8,7 @@ import SignupFormModal from '../SignupFormModal';
 
 function Navigation(): JSX.Element {
     const sessionUser = useSelector((state: RootState) => state.session.user);
-    console.log(sessionUser, 'SESION USER');
+
     return (
         <nav className="nav-bar">
             <div className="nav-left">

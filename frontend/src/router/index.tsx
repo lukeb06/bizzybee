@@ -3,8 +3,8 @@ import LoginFormPage from '../components/LoginFormPage';
 import ViewAllBusinessesPage from '../components/Businesses';
 import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
-import BusinessDetailPage from '../components/Business';
-
+import BusinessDetailPage from '../components/BusinessDetail';
+import ViewAllImagesPage from '../components/Images';
 
 export const router = createBrowserRouter([
     {
