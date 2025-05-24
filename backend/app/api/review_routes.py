@@ -45,7 +45,7 @@ def post_reviews(business_id: int):
 
 @review_routes.route("/<review_id>", methods=["DELETE"])
 @login_required
-def delete_review(review_id):
+def delete_review(review_id: int):
     review = Review.query.get(review_id)
 
     if not review:
@@ -60,9 +60,10 @@ def delete_review(review_id):
     return jsonify({"message": "Successfully deleted"})
 
 
-@review_routes.route("<review_id>", methods=["PUT"])
+@review_routes.route("/<review_id>", methods=["PUT"])
 @login_required
-def edit_review(review_id):
+
+def edit_review(review_id: int):
     review = Review.query.get(review_id)
 
     if not review:
