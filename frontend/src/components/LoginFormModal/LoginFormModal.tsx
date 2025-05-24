@@ -13,6 +13,7 @@ interface IErrors {
 
 function LoginFormModal():JSX.Element {
   const dispatch = useDispatch();
+  const [credential, setCredential] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<IErrors | AnyAction>({email: "", password: ""});
@@ -22,6 +23,7 @@ function LoginFormModal():JSX.Element {
     e.preventDefault();
     const serverResponse = await dispatch(
       thunkLogin({
+        credential,
         email,
         password,
       })
@@ -33,11 +35,16 @@ function LoginFormModal():JSX.Element {
       setErrors(serverResponse);
     }
   };
+  const demoLogin = () => {
+    setCredential('demo@user.io');
+    setPassword('password');
+  }
 
   return (
     <>
+    <div className="login-modal">
       <h1>Log In</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
         <label>
           Email
           <input
@@ -59,7 +66,11 @@ function LoginFormModal():JSX.Element {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <button id="demo-login-button" type="button" onClick={demoLogin}>
+          Demo Login
+        </button>
       </form>
+      </div>
     </>
   );
 }
