@@ -1,0 +1,38 @@
+.login-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    width: 260px;
+    font-family: "Avenir";
+    border-radius: 45px;
+}
+
+.login-modal > h1 {
+    margin-top: 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    width: 100%;
+}
+
+.login-form > label {
+    display: flex;
+    flex-direction: column;
+}
+
+#demo-login-button {
+    border: none;
+    color: rgb(138, 138, 138);
+    background-color: white;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#demo-login-button:hover {
+    color: navy;
+}
