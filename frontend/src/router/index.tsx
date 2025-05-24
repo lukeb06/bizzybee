@@ -5,6 +5,7 @@ import ViewAllBusinessesPage from '../components/Businesses';
 import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
 import BusinessDetailPage from '../components/Business';
+import ViewAllImagesPage from '../components/Images';
 
 export const router = createBrowserRouter([
     {
@@ -32,8 +33,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '*',
-                element: <h1>404 Not Found</h1>
-            }
+                element: <h1>404 Not Found</h1>,
+            },
         ],
     },
 ]);

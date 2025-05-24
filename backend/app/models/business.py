@@ -29,7 +29,7 @@ class Business(db.Model):
     # Relationship
     user = db.relationship("User", back_populates="businesses", uselist=False)
     reviews = db.relationship("Review", back_populates="businesses", uselist=True)
-    images = db.relationship("Image", back_populates="businesses")
+    images = db.relationship("Image", back_populates="businesses", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

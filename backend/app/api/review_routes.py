@@ -6,7 +6,7 @@ from app.forms import ReviewForm
 from flask_login import login_required, current_user
 
 
-review_routes = Blueprint("review", __name__, url_prefix="/reviews")
+review_routes = Blueprint("review", __name__)
 
 
 @review_routes.route("/business/<business_id>", methods=["GET"])
@@ -20,6 +20,7 @@ def reviews(business_id: int):
 @login_required
 def post_reviews(business_id: int):
     form = ReviewForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
         review = Review(
             user_id=current_user.id,
@@ -30,20 +31,21 @@ def post_reviews(business_id: int):
         reviews = Review.query.filter(
             Review.user_id == current_user.id, Review.business_id == business_id
         ).all()
+
         if reviews:
             return {
                 "errors": {"message": "User has already reviewed the business"}
             }, 401
-
         db.session.add(review)
         db.session.commit()
         return review.to_dict()
+
     return form.errors, 401
 
 
 @review_routes.route("/<review_id>", methods=["DELETE"])
 @login_required
-def delete_review(review_id):
+def delete_review(review_id: int):
     review = Review.query.get(review_id)
 
     if not review:
@@ -57,9 +59,10 @@ def delete_review(review_id):
 
     return jsonify({"message": "Successfully deleted"})
 
+
 @review_routes.route("/<review_id>", methods=["PUT"])
 @login_required
-def edit_review(review_id):
+def edit_review(review_id: int):
     review = Review.query.get(review_id)
 
     if not review:
