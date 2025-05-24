@@ -40,7 +40,7 @@ export const thunkCreateBusiness =
     (businessData: IBusinessForm): any =>
     async (dispatch: any) => {
         try {
-            const response = await fetch('/api/businesses', {
+            const response = await fetch('/api/business/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(businessData),
@@ -72,7 +72,7 @@ export default function businessReducer(
     let newState = {
         ...state,
     };
-    let newById = {...newState.byId};
+    let newById = { ...newState.byId };
     let allBusiness = [...newState.allBusinesses];
 
     switch (action.type) {

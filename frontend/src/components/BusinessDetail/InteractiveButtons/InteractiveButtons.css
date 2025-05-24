@@ -1,0 +1,33 @@
+.suggested-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #f7f7f7;
+    border-color: #999;
+}
+
+.review-btn {
+    background-color: #d32323;
+    color: white;
+    border: none;
+}
+
+.review-btn:hover {
+    background-color: #b21f1f;
+}

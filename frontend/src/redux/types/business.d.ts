@@ -15,6 +15,7 @@ export interface IBusiness {
     preview_image: string;
     featured_image: string;
     average_rating: float;
+    review_count: number;
     image_urls: string[];
     lat: number;
     lng: number;
@@ -37,7 +38,6 @@ export interface IBusinessForm {
     lat?: string;
     lng?: string;
 }
-
 
 export interface BusinessId {
     [id: number]: IBusiness;
