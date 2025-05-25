@@ -1,12 +1,13 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { thunkGetAllReviews, thunkDeleteReview } from '../../redux/review';
-import { IReview, IReviewId } from '../../redux/types/review';
+import { thunkGetAllReviews } from '../../redux/review';
+import { IReview } from '../../redux/types/review';
 import { IBusiness } from '../../redux/types/business';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import OpenModalButton from '../OpenModalButton';
 import './Reviews.css';
+import DeleteBizModal from '../DeleteBizModal';
 
 const formatReviewDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -53,12 +54,10 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
               <p className="review-text">{review.review}</p>
               {sessionUser?.id === review.user_id && (
                 <OpenModalButton
+                  className="delete-button"
                   buttonText="Delete"
-                  onButtonClick={()=>{
-                    dispatch(thunkDeleteReview({id: review.id}))
-                  }}
                   onModalClose={null}
-                  modalComponent={null}
+                  modalComponent={<DeleteBizModal reviewId={review.id} />}
                 />
               )}
             </div>

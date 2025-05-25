@@ -65,7 +65,7 @@ export const thunkCreateReview =
     (id: IReviewId): any =>
         async (dispatch: any) => {
             try {
-                const response = await fetch(`/api/reviews/${id}`, {
+                const response = await fetch(`/api/reviews/${id.id}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
                 });
