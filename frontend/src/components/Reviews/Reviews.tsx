@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { thunkGetAllReviews } from '../../redux/review';
-import { IReview } from '../../redux/types/review';
+import { thunkGetAllReviews, thunkDeleteReview } from '../../redux/review';
+import { IReview, IReviewId } from '../../redux/types/review';
 import { IBusiness } from '../../redux/types/business';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import OpenModalButton from '../OpenModalButton';
@@ -40,7 +40,6 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
     return (
         <div className="reviews-container">
             <h2>Reviews</h2>
-
             {sortedReviews.length > 0 ? (
                 <div className="reviews-list">
                     {sortedReviews.map((review: IReview) => (
