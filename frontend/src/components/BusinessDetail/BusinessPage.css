@@ -1,7 +1,25 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
 .image-gallery {
     position: relative;
     display: flex;
+    background-size: cover;
+    backdrop-filter: brightness(50%);
+    background: black;
+    height: 500px;
 }
+
+.separator {
+    border-top: 1px solid #cbc8c8;
+    margin: 20px 0;
+    opacity: 0.5;
+}
+
+/* h1 {
+    text-shadow: 0 0 2px white;
+    padding-top: 50%;
+} */
 
 .main-image {
     width: 100%;
@@ -13,8 +31,32 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 40px;
+    gap: 20px;
 }
 
-.detail-container {
-    margin: 40px;
+.detail-left {
+    width: 100%;
+}
+
+.business-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.business-info h1 {
+    margin-bottom: 1px;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.other-info {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }
