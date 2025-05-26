@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { thunkGetAllReviews, thunkDeleteReview } from '../../redux/review';
-import { IReview, IReviewId } from '../../redux/types/review';
+import { thunkGetAllReviews } from '../../redux/review';
+import { IReview } from '../../redux/types/review';
 import { IBusiness } from '../../redux/types/business';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import OpenModalButton from '../OpenModalButton';
 import './Reviews.css';
+import DeleteReviewModal from '../DeleteReviewModal';
+import EditReviewModal from '../EditReviewModal';
 import { FaUserCircle } from 'react-icons/fa';
 
 const formatReviewDate = (dateString: string): string => {
@@ -55,9 +57,24 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
                                     <ReviewStar rating={review.stars} />
                                 </div>
                             </div>
-                            <p className="review-text">{review.review}</p>
-                            {sessionUser?.id === review.user_id && (
-                                <OpenModalButton buttonText="Delete" />
+                            <div className="review-body">
+                <p className="review-text">{review.review}</p>
+                {sessionUser?.id === review.user_id && (
+                  <OpenModalButton
+                    className="edit-button"
+                    buttonText="Edit"
+                    onModalClose={null}
+                    modalComponent={<EditReviewModal reviewToEdit={review} />}
+                  />
+                )}
+              </div>
+              {sessionUser?.id === review.user_id && (
+                <OpenModalButton
+                  className="delete-button"
+                  buttonText="Delete"
+                  onModalClose={null}
+                  modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                />
                             )}
                         </div>
                     ))}
