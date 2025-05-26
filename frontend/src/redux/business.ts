@@ -44,6 +44,7 @@ export const thunkCreateBusiness =
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(businessData),
+                credentials: "include"
             });
             if (response.ok) {
                 const data = await response.json();
