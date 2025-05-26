@@ -76,7 +76,27 @@ def business(id: int):
     """
 
     business = Business.query.get(id)
-    return jsonify(business.to_dict())
+    if not business:
+        return jsonify({"error": "Business not found"}), 404
+    
+    # Get all business reviews
+    reviews = business.reviews
+    review_count = len(reviews)
+    average_rating = (
+        sum(review.stars for review in reviews) / review_count if review_count > 0 else None
+    )
+
+    # Get featured image
+    for image in business.images:
+        if image.is_featured:
+            featured_image = image.url
+            break
+
+    business_data = business.to_dict()
+    business_data["featured_image"] = featured_image
+    business_data["average_rating"] = average_rating
+    business_data["review_count"] = review_count
+    return jsonify(business_data)
 
 
 @business_routes.route("/", methods=["POST"])

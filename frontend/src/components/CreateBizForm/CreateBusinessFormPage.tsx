@@ -96,8 +96,8 @@ const CreateBusinessFormPage = () => {
         const newBusiness = await dispatch(thunkCreateBusiness(businessData));
 
         if (newBusiness) {
-            navigate('/');
-            // navigate(`/business/${newBusiness.id}`);
+            // navigate('/');
+            navigate(`/business/${newBusiness.id}`);
         } else {
             setErrors({ message: 'Failed to create spot. Please try again.' });
         }
