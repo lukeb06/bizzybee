@@ -85,12 +85,13 @@ export const thunkCreateReview =
         export const thunkEditReview = (reviewToEdit: IReview) => async (dispatch: any) => {
           const { id, review, stars } = reviewToEdit;
           const response = await fetch(`/api/reviews/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({
-              review,
-              stars
-            })
-          });
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    });
           const data = await response.json();
           dispatch(getAllReviewsAction(data));
           return data;

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { thunkGetAllReviews } from '../../redux/review';
@@ -7,7 +6,8 @@ import { IBusiness } from '../../redux/types/business';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import OpenModalButton from '../OpenModalButton';
 import './Reviews.css';
-import DeleteBizModal from '../DeleteBizModal';
+import DeleteReviewModal from '../DeleteReviewModal';
+import EditReviewModal from '../EditReviewModal';
 
 const formatReviewDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -51,13 +51,23 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
             <div key={review.id} className="review-item">
               <p className="review-date">{formatReviewDate(review.created_at)}</p>
               <ReviewStar reviewCount={review.stars} />
-              <p className="review-text">{review.review}</p>
+              <div className="review-body">
+                <p className="review-text">{review.review}</p>
+                {sessionUser?.id === review.user_id && (
+                  <OpenModalButton
+                    className="edit-button"
+                    buttonText="Edit"
+                    onModalClose={null}
+                    modalComponent={<EditReviewModal reviewToEdit={review} />}
+                  />
+                )}
+              </div>
               {sessionUser?.id === review.user_id && (
                 <OpenModalButton
                   className="delete-button"
                   buttonText="Delete"
                   onModalClose={null}
-                  modalComponent={<DeleteBizModal reviewId={review.id} />}
+                  modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
               )}
             </div>

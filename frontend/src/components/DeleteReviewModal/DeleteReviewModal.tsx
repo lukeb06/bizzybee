@@ -2,13 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkDeleteReview } from '../../redux/review';
 import { useModal } from '../../context/Modal';
-import './DeleteBizModal.css';
+import './DeleteReviewModal.css'
 
-interface DeleteBizModalProps {
+interface DeleteReviewModalProps {
   reviewId: number;
 }
 
-const DeleteBizModal: React.FC<DeleteBizModalProps> = ({ reviewId }) => {
+const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -41,4 +41,4 @@ const DeleteBizModal: React.FC<DeleteBizModalProps> = ({ reviewId }) => {
   );
 };
 
-export default DeleteBizModal;
+export default DeleteReviewModal;
