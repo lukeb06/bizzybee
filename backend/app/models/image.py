@@ -7,7 +7,7 @@ class Image(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(300), nullable=False)
+    url = db.Column(db.String(4096), nullable=False)
     business_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("businesses.id")), nullable=False)
     is_featured = db.Column(db.Boolean, nullable=False)
     is_preview = db.Column(db.Boolean, nullable=False)

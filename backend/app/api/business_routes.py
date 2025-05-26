@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from app.models import Business, Image
 from flask_login import login_required, current_user
 from app.models.db import db
@@ -130,15 +130,17 @@ def create_business():
         # add other images
         image_urls = form.data.get("image_urls", [])
         for url in image_urls:
-            image = Image(
+            if url:
+                image = Image(
                 business_id=business_id, url=url, is_featured=False, is_preview=False
             )
-        db.session.add(image)
+                db.session.add(image)
 
         db.session.commit()
         return jsonify(business.to_dict()), 201
     else:
-        return jsonify({"errors": form.errors}), 401
+        current_app.logger.warning("Form errors: %s", form.errors)
+        return jsonify(errors=form.errors), 400
 
 
 @business_routes.route("/<id>", methods=["PUT"])
