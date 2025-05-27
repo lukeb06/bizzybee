@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
+import { FaUserCircle } from 'react-icons/fa';
 import "./SignupForm.css";
 
 
@@ -56,53 +57,51 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
+    <div className="sign-up-modal-div">
+      <FaUserCircle style={{ color: '#7d7a85' }} className="profile-pic"/>
+      <h1>Sign Up For Yelp</h1>
+      <h2>Connect with great local businesses</h2>
       {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
+      <form onSubmit={handleSubmit} className="sign-up-form">
+     
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
             required
           />
-        </label>
         {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
             required
           />
-        </label>
+      
         {errors.username && <p>{errors.username}</p>}
-        <label>
-          Password
+       
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="password"
             required
           />
-        </label>
+       
         {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
             required
           />
-        </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -5,8 +5,25 @@ body {
     position: absolute;
 }
 .yelp-logo{
-    width: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+.sign-up-button{
+    background-color: #d32323;
+    color: white;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
     height: 2rem;
+    box-sizing: border-box;
+}
+.login-link{
+    font-size: 1.2rem;
+    padding: .5rem 1rem;
+    box-sizing: border-box;
+    height: 2rem;
+}
+.login-link>a{
+    text-decoration: none;
 }
 
 .nav-bar {

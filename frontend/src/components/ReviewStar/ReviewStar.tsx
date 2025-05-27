@@ -13,7 +13,7 @@ const ReviewStar: React.FC<IReviewStarProps> = ({ rating }) => {
             {Array(rating)
                 .fill(null)
                 .map((el, idx) => (
-                    <div>
+                    <div key={idx}>
                         <FontAwesomeIcon
                             icon={faStar}
                             style={{ color: '#f04c4c', fontSize: '18px' }}
