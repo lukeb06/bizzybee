@@ -25,7 +25,10 @@ export default function ViewAllBusinessesPage() {
         }
     }, [dispatch, businesses, isLoaded]);
 
-    const goToSpotDetail = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent>, business: { id: number }) => {
+    const goToSpotDetail = (
+        e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent>,
+        business: { id: number },
+    ) => {
         e.preventDefault();
         navigate(`/business/${business.id}`);
     };
@@ -35,7 +38,7 @@ export default function ViewAllBusinessesPage() {
             <h1> Welcome to Home Page</h1>
             <div className="business-list">
                 {businesses.length === 0 ? (
-                    <p>No businesss available</p>
+                    <p>No businesses available</p>
                 ) : (
                     <div className="business-list">
                         {businesses.map((business, index) => (
