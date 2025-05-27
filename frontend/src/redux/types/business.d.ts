@@ -35,8 +35,6 @@ export interface IBusinessForm {
     preview_image: string;
     featured_image: string;
     image_urls: string[];
-    lat?: string;
-    lng?: string;
 }
 
 export interface BusinessId {
@@ -54,12 +52,11 @@ export interface IBusinessActionCreator {
 }
 
 export interface ValidationErrors {
-    country?: string;
+    name?: string;
     address?: string;
     city?: string;
     state?: string;
     country?: string;
-    name?: string;
     description?: string;
     priceRange?: string;
     previewImage?: string;

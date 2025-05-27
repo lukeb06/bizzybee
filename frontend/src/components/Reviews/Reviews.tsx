@@ -42,6 +42,7 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
     return (
         <div className="reviews-container">
             <h2>Reviews</h2>
+
             {sortedReviews.length > 0 ? (
                 <div className="reviews-list">
                     {sortedReviews.map((review: IReview, idx) => (
@@ -58,23 +59,23 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
                                 </div>
                             </div>
                             <div className="review-body">
-                <p className="review-text">{review.review}</p>
-                {sessionUser?.id === review.user_id && (
-                  <OpenModalButton
-                    className="edit-button"
-                    buttonText="Edit"
-                    onModalClose={null}
-                    modalComponent={<EditReviewModal reviewToEdit={review} />}
-                  />
-                )}
-              </div>
-              {sessionUser?.id === review.user_id && (
-                <OpenModalButton
-                  className="delete-button"
-                  buttonText="Delete"
-                  onModalClose={null}
-                  modalComponent={<DeleteReviewModal reviewId={review.id} />}
-                />
+                                <p className="review-text">{review.review}</p>
+                                {sessionUser?.id === review.user_id && (
+                                    <OpenModalButton
+                                        className="edit-button"
+                                        buttonText="Edit"
+                                        onModalClose={null}
+                                        modalComponent={<EditReviewModal reviewToEdit={review} />}
+                                    />
+                                )}
+                            </div>
+                            {sessionUser?.id === review.user_id && (
+                                <OpenModalButton
+                                    className="delete-button"
+                                    buttonText="Delete"
+                                    onModalClose={null}
+                                    modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                                />
                             )}
                         </div>
                     ))}

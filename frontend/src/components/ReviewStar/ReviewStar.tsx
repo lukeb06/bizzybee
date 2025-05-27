@@ -24,5 +24,4 @@ const ReviewStar: React.FC<IReviewStarProps> = ({ rating }) => {
     );
 };
 
-
 export default ReviewStar;

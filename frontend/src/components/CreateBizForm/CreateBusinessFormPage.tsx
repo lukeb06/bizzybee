@@ -33,7 +33,7 @@ const CreateBusinessFormPage = () => {
     const [zipcode, setZipcode] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [priceRange, setPriceRange] = useState('0');
+    const [priceRange, setPriceRange] = useState('');
     const [featuredImage, setFeaturedImage] = useState('');
     const [previewImage, setPreviewImage] = useState('');
     const [imageUrls, setImageUrls] = useState(['', '']);
@@ -51,21 +51,13 @@ const CreateBusinessFormPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitted(true);
-        // setErrors({
-        //     name: '',
-        //     address: '',
-        //     city: '',
-        //     state: '',
-        //     country: '',
-        //     description: '',
-        //     priceRange: '',
-        //     featuredImage: '',
-        // });
-        const validationErrors: ValidationErrors = {};
+
+        const validationErrors: ICreateBusinessError = {};
         if (!name) validationErrors.name = 'Business name is required';
         if (!address) validationErrors.address = 'Address is required';
         if (!city) validationErrors.city = 'City is required';
         if (!state) validationErrors.state = 'State is required';
+        if (!zipcode) validationErrors.state = 'Zipcode is required';
         if (!country) validationErrors.country = 'Country is required';
         if (description.length < 30)
             validationErrors.description = 'Description needs 30 or more characters';
@@ -80,10 +72,10 @@ const CreateBusinessFormPage = () => {
         const businessData: IBusinessForm = {
             owner_id: sessionUser!.id,
             name,
-            country,
             address,
             city,
             state,
+            country,
             zipcode,
             category,
             description,
@@ -99,8 +91,30 @@ const CreateBusinessFormPage = () => {
             // navigate('/');
             navigate(`/business/${newBusiness.id}`);
         } else {
-            setErrors({ message: 'Failed to create spot. Please try again.' });
+            setErrors({ message: 'Failed to create business. Please try again.' });
         }
+    };
+
+    const autoFill = () => {
+        setName('Pauli');
+        setCountry('United States');
+        setAddress('65 Salem St');
+        setState('MA');
+        setCity('Boston');
+        setZipcode('02113');
+        setCategory('takeout');
+        setDescription(
+            'Our menu features a wide variety of sandwiches, lobster rolls, salads, wraps, breakfast items, pastas, burgers and entrees sure to please any customer.',
+        );
+        setPriceRange('2');
+        setFeaturedImage(
+            'https://www.ameliaisland.com/wp-content/uploads/2024-Amelia-Masons-Famous-Lobster-Rolls-031A-Deremer-Studios-LLC.jpg',
+        );
+        setPreviewImage('https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg');
+        setImageUrls([
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+        ]);
     };
 
     return (
@@ -156,7 +170,7 @@ const CreateBusinessFormPage = () => {
                             type="text"
                             value={address}
                             onChange={e => setAddress(e.target.value)}
-                            placeholder="Street Address (optional)"
+                            placeholder="Street Address"
                         />
                     </label>
                     <div className="city-state">
@@ -251,6 +265,7 @@ const CreateBusinessFormPage = () => {
                         id="price_range"
                         name="price_range"
                         required
+                        value={priceRange}
                         onChange={e => setPriceRange(e.target.value)}
                     >
                         <option value="">Select</option>
@@ -298,9 +313,14 @@ const CreateBusinessFormPage = () => {
                         />
                     ))}
                 </section>
-                <button type="submit" className="create-business-button">
-                    Create Business
-                </button>
+                <div className="buttons">
+                    <button type="submit" className="create-business-button">
+                        Create Business
+                    </button>
+                    <button className="autofill-button" type="button" onClick={autoFill}>
+                        AutoFill
+                    </button>
+                </div>
             </div>
         </form>
     );
