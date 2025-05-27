@@ -37,7 +37,7 @@ export default function ViewAllBusinessesPage() {
         <>
             <div className="business-list">
                 {businesses.length === 0 ? (
-                    <p>No businesss available</p>
+                    <p>No businesses available</p>
                 ) : (
                     <div className="business-list">
                         {businesses.map((business, index) => (

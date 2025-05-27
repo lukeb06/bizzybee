@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import add_prefix_for_prod, db, environment, SCHEMA
 from datetime import datetime
 
 
@@ -9,7 +9,9 @@ class Business(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    owner_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
+    )
     country = db.Column(db.String(50))
     address = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(50), nullable=False)
@@ -29,7 +31,9 @@ class Business(db.Model):
     # Relationship
     user = db.relationship("User", back_populates="businesses", uselist=False)
     reviews = db.relationship("Review", back_populates="businesses", uselist=True)
-    images = db.relationship("Image", back_populates="businesses", cascade="all, delete-orphan")
+    images = db.relationship(
+        "Image", back_populates="businesses", cascade="all, delete-orphan"
+    )
 
     def to_dict(self):
         return {
