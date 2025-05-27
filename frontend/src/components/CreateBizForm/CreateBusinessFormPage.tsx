@@ -85,17 +85,36 @@ const CreateBusinessFormPage = () => {
             image_urls: imageUrls,
         };
 
-        console.log(businessData, 'THIS IS BUSINESS DATA BEFORE THUNK ACTION');
-
         const newBusiness = await dispatch(thunkCreateBusiness(businessData));
-        console.log(newBusiness, 'THIS IS BUSINESS');
 
         if (newBusiness) {
             // navigate('/');
             navigate(`/business/${newBusiness.id}`);
         } else {
-            setErrors({ message: 'Failed to create spot. Please try again.' });
+            setErrors({ message: 'Failed to create business. Please try again.' });
         }
+    };
+
+    const autoFill = () => {
+        setName('Pauli');
+        setCountry('United States');
+        setAddress('65 Salem St');
+        setState('MA');
+        setCity('Boston');
+        setZipcode('02113');
+        setCategory('takeout');
+        setDescription(
+            'Our menu features a wide variety of sandwiches, lobster rolls, salads, wraps, breakfast items, pastas, burgers and entrees sure to please any customer.',
+        );
+        setPriceRange('2');
+        setFeaturedImage(
+            'https://www.ameliaisland.com/wp-content/uploads/2024-Amelia-Masons-Famous-Lobster-Rolls-031A-Deremer-Studios-LLC.jpg',
+        );
+        setPreviewImage('https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg');
+        setImageUrls([
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+        ]);
     };
 
     return (
@@ -294,9 +313,14 @@ const CreateBusinessFormPage = () => {
                         />
                     ))}
                 </section>
-                <button type="submit" className="create-business-button">
-                    Create Business
-                </button>
+                <div className="buttons">
+                    <button type="submit" className="create-business-button">
+                        Create Business
+                    </button>
+                    <button className="autofill-button" type="button" onClick={autoFill}>
+                        AutoFill
+                    </button>
+                </div>
             </div>
         </form>
     );

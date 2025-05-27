@@ -60,24 +60,21 @@ const BusinessDetailPage: React.FC = () => {
         <div className="business-page">
             <div className="image-gallery">
                 <img className="main-image" src={featuredImage} alt="" />
-            </div>
-
-            <div className="detail-container">
-                <div className="detail-left">
-                    <div>
-                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} />
-                    </div>
-
+                <div className="image-overlay">
                     <div className="business-info">
                         <h1>{business.name}</h1>
 
                         <div className="rating">
                             <div>
-                                <ReviewStar rating={business.average_rating} />
+                                {business.review_count ? (
+                                    <ReviewStar rating={business.average_rating} />
+                                ) : (
+                                    'New'
+                                )}
                             </div>
                             <div>
-                                {business.average_rating?.toFixed(1)} ({business.review_count})
-                                reviews
+                                {business.average_rating?.toFixed(1)} ({business.review_count}{' '}
+                                reviews)
                             </div>
                         </div>
                         <div className="other-info">
@@ -86,11 +83,20 @@ const BusinessDetailPage: React.FC = () => {
                                 <strong style={{ color: '#3f9ae3' }}>Claimed</strong>
                             </div>
                             <div className="other-info">
-                                •<span>{business.price_range}</span> •
+                                ·<span>{'$'.repeat(business.price_range)}</span> ·
                                 <span>{business.category}</span>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="detail-container">
+                <div className="detail-left">
+                    <div>
+                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} />
+                    </div>
+
                     <hr className="separator" />
                     <h2>About the Business</h2>
                     <div className="business-description">{business.description}</div>

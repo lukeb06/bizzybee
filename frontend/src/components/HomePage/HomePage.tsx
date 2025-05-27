@@ -7,12 +7,13 @@ import { FaWandMagicSparkles } from 'react-icons/fa6';
 import { IoHome } from 'react-icons/io5';
 import { FaCar } from 'react-icons/fa6';
 import { CiSearch } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 const heroSlides = [
     {
         image: 'https://cdn.choosechicago.com/uploads/2022/06/13B9D6FA-A313-4521-8851-B25287A1E735-1-scaled-e1656533128290-1800x1350.jpeg',
         headline: 'Find your next favorite bite',
-        placeholder: 'landscapers',
+        placeholder: 'restaurants',
     },
     {
         image: 'https://www.robertlandscapes.com/wp-content/uploads/2023/11/Blog-image-Multi-Level-Garden-Design.jpg',
@@ -37,6 +38,7 @@ const categories = [
 
 export default function HomePage() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -69,7 +71,11 @@ export default function HomePage() {
                 <h2>Categories</h2>
                 <div className="category-grid">
                     {categories.map(cat => (
-                        <div key={cat.name} className="category-card">
+                        <div
+                            key={cat.name}
+                            className="category-card"
+                            onClick={() => navigate('/business')}
+                        >
                             <div className="category-icon">{cat.icon}</div>
                             <div className="category-name">{cat.name}</div>
                         </div>
