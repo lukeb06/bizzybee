@@ -1,4 +1,4 @@
-from app.models import db, User, Business, environment, SCHEMA
+from app.models import db, Business, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
 
@@ -13,6 +13,7 @@ def seed_businesses():
         state="MA",
         zipcode="12345",
         category="restaurant",
+        country="USA",
         description="We offer variety of freshly made sushi, hibachi lunch and dinner, bento box, teriyaki, yakitori, noodles, cocktails, sake, beer, wine, and more conveniently. free parking for dinner.",
         lat=43.987,
         lng=54.344,
@@ -28,6 +29,7 @@ def seed_businesses():
         state="FL",
         zipcode="12345",
         category="takeout",
+        country="USA",
         description="Cafe serving premium organic brewed coffee (e.g., mushroom coffee), espresso and tea. Breakfast and lunch sandwiches served daily. Friendly staff providing superior customer service.",
         lat=43.987,
         lng=54.344,
@@ -42,6 +44,7 @@ def seed_businesses():
         state="MA",
         zipcode="12345",
         category="delivery",
+        country="USA",
         description="Hot Chix Boston is a Nashville Style Hot Chicken restaurant located in the heart of Inman Square. Our small team of restaurant people is dedicated to serving the most delicious and hottest fried chicken that we can respectfully make.",
         lat=43.987,
         lng=54.344,

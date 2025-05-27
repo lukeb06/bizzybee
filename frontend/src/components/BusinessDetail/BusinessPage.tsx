@@ -3,7 +3,7 @@ import ReviewStar from '../ReviewStar/ReviewStar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../redux/store';
 import { useDispatch } from 'react-redux';
-import { thunkGetOneBusiness } from '../../redux/business';
+import { thunkGetOneBusiness, thunkRemoveBusiness } from '../../redux/business';
 import Reviews from '../Reviews/Reviews';
 import OrderSection from './OrderSection/OrderSection';
 import InteractiveButtons from './InteractiveButtons/InteractiveButtons';
@@ -21,7 +21,7 @@ const BusinessDetailPage: React.FC = () => {
     const reviews = useAppSelector(state => state.reviews.allReviews);
     const currentUser = useAppSelector(state => state.session.user);
     const isOwner = currentUser?.id === business?.owner_id;
-    const hasReviewed = reviews.some((review) => review.user_id === currentUser?.id)
+    const hasReviewed = reviews.some(review => review.user_id === currentUser?.id);
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -43,13 +43,14 @@ const BusinessDetailPage: React.FC = () => {
         return <div>Business not found</div>;
     }
 
-    const handleDeleteBusiness = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleDeleteBusiness = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        // TODO:
+        await dispatch(thunkRemoveBusiness(businessId || ''));
+        navigate('/');
     };
     const handleUpdateBusiness = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        // TODO navigate to the existing create form page, where everything should be prefilled:
+        navigate(`/update-business/${businessId}`);
     };
 
     if (!isLoaded || !business) {
@@ -76,7 +77,7 @@ const BusinessDetailPage: React.FC = () => {
                             </div>
                             <div>
                                 {business.average_rating?.toFixed(1)} ({business.review_count}{' '}
-                                {business.review_count === 1 ? "Review" : "Reviews"})
+                                {business.review_count === 1 ? 'Review' : 'Reviews'})
                             </div>
                         </div>
                         <div className="other-info">
@@ -96,7 +97,11 @@ const BusinessDetailPage: React.FC = () => {
             <div className="detail-container">
                 <div className="detail-left">
                     <div>
-                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} hasReviewed={hasReviewed} />
+                        <InteractiveButtons
+                            isOwner={isOwner}
+                            isLoggedIn={!!currentUser}
+                            hasReviewed={hasReviewed}
+                        />
                     </div>
 
                     <hr className="separator" />
@@ -112,8 +117,12 @@ const BusinessDetailPage: React.FC = () => {
                 </div>
             </div>
             {/* Dev items, please delete if not needed, or adjust */}
-            <button onClick={e => handleDeleteBusiness(e)}>Delete a businesss</button>
-            <button onClick={e => handleUpdateBusiness(e)}>Update a business</button>
+            {currentUser?.id === business?.owner_id && (
+                <>
+                    <button onClick={e => handleDeleteBusiness(e)}>Delete a businesss</button>
+                    <button onClick={e => handleUpdateBusiness(e)}>Update a business</button>
+                </>
+            )}
         </div>
     );
 };

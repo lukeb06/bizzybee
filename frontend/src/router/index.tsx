@@ -5,6 +5,7 @@ import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
 import BusinessDetailPage from '../components/BusinessDetail';
 import HomePage from '../components/HomePage';
+import UpdateBusinessFormPage from '../components/UpdateBizForm';
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
             {
                 path: '/create-business',
                 element: <CreateBusinessFormPage />,
+            },
+            {
+                path: '/update-business/:businessId',
+                element: <UpdateBusinessFormPage />,
             },
             {
                 path: '/business/:businessId',
