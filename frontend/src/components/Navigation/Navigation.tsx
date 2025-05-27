@@ -12,8 +12,9 @@ function Navigation(): JSX.Element {
     return (
         <nav className="nav-bar">
             <div className="nav-left">
+                <NavLink to="/">
                 <img src="https://static-00.iconduck.com/assets.00/yelp-icon-2048x2048-ys10gku9.png" alt="yelp logo" className="yelp-logo"/>
-                <NavLink to="/">Home</NavLink>
+                </NavLink>
             </div>
 
             <div className="nav-right">
@@ -32,9 +33,10 @@ function Navigation(): JSX.Element {
                 <div>
                     {!sessionUser && (
                         <div>
-                        <NavLink to="/login">Log In</NavLink>
+                        <NavLink to="/login" className="login-link">Log In</NavLink>
                            <OpenModalButton
                   buttonText="Sign Up"
+                  className="sign-up-button"
                   onButtonClick={()=>{
                     }}
                   onModalClose={undefined}
