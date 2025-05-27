@@ -4,7 +4,7 @@ import ViewAllBusinessesPage from '../components/Businesses';
 import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
 import BusinessDetailPage from '../components/BusinessDetail';
-
+import HomePage from '../components/HomePage';
 
 export const router = createBrowserRouter([
     {
@@ -15,10 +15,14 @@ export const router = createBrowserRouter([
                 element: <ViewAllBusinessesPage />,
             },
             {
+                path: '/test',
+                element: <HomePage />,
+            },
+            {
                 path: '/login',
                 element: <LoginFormPage />,
             },
-            
+
             {
                 path: '/create-business',
                 element: <CreateBusinessFormPage />,

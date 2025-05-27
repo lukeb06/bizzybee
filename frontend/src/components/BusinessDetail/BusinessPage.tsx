@@ -17,7 +17,7 @@ const BusinessDetailPage: React.FC = () => {
     const business = useAppSelector(state =>
         businessId ? state.businesses.byId[Number(businessId)] : undefined,
     );
-    console.log(business, 'THIS IS BUSINESS');
+    // console.log(business, 'THIS IS BUSINESS');
     const currentUser = useAppSelector(state => state.session.user);
     const isOwner = currentUser?.id === business?.owner_id;
 
@@ -88,9 +88,6 @@ const BusinessDetailPage: React.FC = () => {
                             <div className="other-info">
                                 •<span>{business.price_range}</span> •
                                 <span>{business.category}</span>
-                            </div>
-                            <div className="spot-description">
-                                <p>{business.description}</p>
                             </div>
                         </div>
                     </div>

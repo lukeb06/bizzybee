@@ -33,7 +33,7 @@ const CreateBusinessFormPage = () => {
     const [zipcode, setZipcode] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [priceRange, setPriceRange] = useState('0');
+    const [priceRange, setPriceRange] = useState('');
     const [featuredImage, setFeaturedImage] = useState('');
     const [previewImage, setPreviewImage] = useState('');
     const [imageUrls, setImageUrls] = useState(['', '']);
@@ -51,21 +51,13 @@ const CreateBusinessFormPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitted(true);
-        // setErrors({
-        //     name: '',
-        //     address: '',
-        //     city: '',
-        //     state: '',
-        //     country: '',
-        //     description: '',
-        //     priceRange: '',
-        //     featuredImage: '',
-        // });
-        const validationErrors: ValidationErrors = {};
+
+        const validationErrors: ICreateBusinessError = {};
         if (!name) validationErrors.name = 'Business name is required';
         if (!address) validationErrors.address = 'Address is required';
         if (!city) validationErrors.city = 'City is required';
         if (!state) validationErrors.state = 'State is required';
+        if (!zipcode) validationErrors.state = 'Zipcode is required';
         if (!country) validationErrors.country = 'Country is required';
         if (description.length < 30)
             validationErrors.description = 'Description needs 30 or more characters';
@@ -80,10 +72,10 @@ const CreateBusinessFormPage = () => {
         const businessData: IBusinessForm = {
             owner_id: sessionUser!.id,
             name,
-            country,
             address,
             city,
             state,
+            country,
             zipcode,
             category,
             description,
@@ -93,7 +85,10 @@ const CreateBusinessFormPage = () => {
             image_urls: imageUrls,
         };
 
+        console.log(businessData, 'THIS IS BUSINESS DATA BEFORE THUNK ACTION');
+
         const newBusiness = await dispatch(thunkCreateBusiness(businessData));
+        console.log(newBusiness, 'THIS IS BUSINESS');
 
         if (newBusiness) {
             // navigate('/');
@@ -156,7 +151,7 @@ const CreateBusinessFormPage = () => {
                             type="text"
                             value={address}
                             onChange={e => setAddress(e.target.value)}
-                            placeholder="Street Address (optional)"
+                            placeholder="Street Address"
                         />
                     </label>
                     <div className="city-state">
@@ -251,6 +246,7 @@ const CreateBusinessFormPage = () => {
                         id="price_range"
                         name="price_range"
                         required
+                        value={priceRange}
                         onChange={e => setPriceRange(e.target.value)}
                     >
                         <option value="">Select</option>
