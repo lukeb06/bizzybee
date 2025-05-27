@@ -35,7 +35,6 @@ export default function ViewAllBusinessesPage() {
 
     return (
         <>
-            <h1> Welcome to Home Page</h1>
             <div className="business-list">
                 {businesses.length === 0 ? (
                     <p>No businesses available</p>
@@ -77,15 +76,15 @@ export default function ViewAllBusinessesPage() {
                                             </span>
                                             <span className="review-count">(42 reviews)</span>
                                         </div> */}
-                                        <ReviewStar reviewCount={business.average_rating} />
+                                        <ReviewStar rating={business.average_rating} />
                                         <div className="biz-hour"></div>
                                         <div className="location-price-hour">
                                             <span>
                                                 {business.city}, {business.state}
                                             </span>
-                                            <strong> • </strong>
+                                            <span> • </span>
                                             <span>{'$'.repeat(business.price_range)}</span>
-                                            <strong> • </strong>
+                                            <span> • </span>
                                             <span> Closed/Open until 7:00AM</span>
                                         </div>
                                         <div className="most-recent-review">

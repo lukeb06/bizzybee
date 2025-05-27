@@ -29,7 +29,6 @@ export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
         const response = await fetch('/api/business');
         if (response.ok) {
             const data = await response.json();
-            // console.log('=========THIS IS BUSINESS DATA=====', data);
             dispatch(getAllBusinessesAction(data));
         } else {
             throw response;

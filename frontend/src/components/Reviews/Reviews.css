@@ -3,27 +3,27 @@
 }
 
 .review-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 0;
 }
 
 .review-body {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .review-date {
-  color: #888;
-  margin: 0;
+    color: #888;
+    margin: 0;
 }
 
 .review-text {
-  margin: 0;
-  line-height: 1.5;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .user-info {
@@ -34,33 +34,32 @@
 }
 
 .delete-button {
-  padding: 10px;
-  background-color: #d32323;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  align-self: flex-start;
-  margin-top: 8px;
+    padding: 10px;
+    background-color: #d32323;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 8px;
 }
 
 .delete-button:hover {
-  background-color: #b91c1c;
+    background-color: #b91c1c;
 }
 
 .edit-button {
-  padding: 10px;
-  background-color: #808080;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  flex-shrink: 0;
+    padding: 10px;
+    background-color: #808080;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .edit-button:hover {
-  background-color: #6c6c6c;
+    background-color: #6c6c6c;
 }
-

@@ -4,10 +4,28 @@ body {
 .image-gallery {
     position: relative;
     display: flex;
-    background-size: cover;
-    backdrop-filter: brightness(50%);
-    background: black;
     height: 500px;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.business-info {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.business-info h1 {
+    margin-bottom: 1px;
 }
 
 .separator {
@@ -15,11 +33,6 @@ body {
     margin: 20px 0;
     opacity: 0.5;
 }
-
-/* h1 {
-    text-shadow: 0 0 2px white;
-    padding-top: 50%;
-} */
 
 .main-image {
     width: 100%;
@@ -37,16 +50,6 @@ body {
 
 .detail-left {
     width: 100%;
-}
-
-.business-info {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.business-info h1 {
-    margin-bottom: 1px;
 }
 
 .rating {
