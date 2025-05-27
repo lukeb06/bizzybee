@@ -41,7 +41,8 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
 
     return (
         <div className="reviews-container">
-            <h2>Reviews</h2>
+            <h2>{business?.average_rating?.toFixed(1)} ({business?.review_count}{' '}
+                                {business?.review_count === 1 ? "Review" : "Reviews"})</h2>
 
             {sortedReviews.length > 0 ? (
                 <div className="reviews-list">

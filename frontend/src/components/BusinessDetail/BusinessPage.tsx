@@ -76,7 +76,7 @@ const BusinessDetailPage: React.FC = () => {
                             </div>
                             <div>
                                 {business.average_rating?.toFixed(1)} ({business.review_count}{' '}
-                                reviews)
+                                {business.review_count === 1 ? "Review" : "Reviews"})
                             </div>
                         </div>
                         <div className="other-info">
@@ -96,7 +96,7 @@ const BusinessDetailPage: React.FC = () => {
             <div className="detail-container">
                 <div className="detail-left">
                     <div>
-                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} />
+                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} hasReviewed={hasReviewed} />
                     </div>
 
                     <hr className="separator" />
