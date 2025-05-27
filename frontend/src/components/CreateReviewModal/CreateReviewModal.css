@@ -1,0 +1,100 @@
+.create-review-modal {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 450px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.create-review-modal h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+.review-errors {
+    color: #d93025;
+    background-color: #fbe9e7;
+    border: 1px solid #f9c6c0;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.create-review-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.create-review-modal textarea {
+    min-height: 120px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.create-review-modal textarea::placeholder {
+    color: #999;
+}
+
+.star-rating {
+  font-size: 24px;
+  color: #ccc;
+}
+
+.star-rating span {
+  cursor: pointer;
+}
+
+.star-rating span.filled {
+  color: gold;
+}
+
+.review-submit-button {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #d32323;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.review-submit-button:hover:not(:disabled) {
+    background-color: #b91c1c;
+}
+
+.review-submit-button:disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  min-height: 100px;
+}

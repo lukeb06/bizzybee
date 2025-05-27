@@ -15,6 +15,7 @@ const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
   const handleDelete = () => {
     dispatch(thunkDeleteReview({ id: reviewId }));
     closeModal();
+    window.location.reload();
   };
 
   return (

@@ -18,8 +18,10 @@ const BusinessDetailPage: React.FC = () => {
         businessId ? state.businesses.byId[Number(businessId)] : undefined,
     );
     console.log(business, 'THIS IS BUSINESS');
+    const reviews = useAppSelector(state => state.reviews.allReviews);
     const currentUser = useAppSelector(state => state.session.user);
     const isOwner = currentUser?.id === business?.owner_id;
+    const hasReviewed = reviews.some((review) => review.user_id === currentUser?.id)
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -65,7 +67,7 @@ const BusinessDetailPage: React.FC = () => {
             <div className="detail-container">
                 <div className="detail-left">
                     <div>
-                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} />
+                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} hasReviewed={hasReviewed} />
                     </div>
 
                     <div className="business-info">

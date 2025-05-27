@@ -6,6 +6,7 @@ interface OpenModalButtonProps {
   onButtonClick?: () => void;
   onModalClose?: (() => void) | null;
   className?: string;
+  icon?: React.ReactNode;
 }
 
 function OpenModalButton({
@@ -14,6 +15,7 @@ function OpenModalButton({
   onButtonClick,
   onModalClose,
   className,
+  icon
 }: OpenModalButtonProps) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -23,7 +25,7 @@ function OpenModalButton({
     onButtonClick?.();
   };
 
-  return <button onClick={handleClick} className={className}>{buttonText}</button>;
+  return <button onClick={handleClick} className={className}>{icon}{buttonText}</button>;
 }
 
 export default OpenModalButton;
