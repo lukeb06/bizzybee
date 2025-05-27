@@ -18,8 +18,10 @@ const BusinessDetailPage: React.FC = () => {
         businessId ? state.businesses.byId[Number(businessId)] : undefined,
     );
     // console.log(business, 'THIS IS BUSINESS');
+    const reviews = useAppSelector(state => state.reviews.allReviews);
     const currentUser = useAppSelector(state => state.session.user);
     const isOwner = currentUser?.id === business?.owner_id;
+    const hasReviewed = reviews.some((review) => review.user_id === currentUser?.id)
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -74,7 +76,7 @@ const BusinessDetailPage: React.FC = () => {
                             </div>
                             <div>
                                 {business.average_rating?.toFixed(1)} ({business.review_count}{' '}
-                                reviews)
+                                {business.review_count === 1 ? "Review" : "Reviews"})
                             </div>
                         </div>
                         <div className="other-info">
@@ -94,7 +96,7 @@ const BusinessDetailPage: React.FC = () => {
             <div className="detail-container">
                 <div className="detail-left">
                     <div>
-                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} />
+                        <InteractiveButtons isOwner={isOwner} isLoggedIn={!!currentUser} hasReviewed={hasReviewed} />
                     </div>
 
                     <hr className="separator" />

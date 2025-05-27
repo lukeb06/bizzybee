@@ -3,21 +3,26 @@ import { FaRegStar } from 'react-icons/fa';
 import { CiCamera } from 'react-icons/ci';
 import { IoShareOutline } from 'react-icons/io5';
 import { CiBookmark } from 'react-icons/ci';
+import OpenModalButton from '../../OpenModalButton';
 import './InteractiveButtons.css';
+import CreateReviewModal from '../../CreateReviewModal';
 
 interface IInteractiveButtonsProps {
     isOwner: boolean;
     isLoggedIn: boolean;
+    hasReviewed: boolean;
 }
 
-const InteractiveButtons: React.FC<IInteractiveButtonsProps> = ({ isOwner, isLoggedIn }) => {
+const InteractiveButtons: React.FC<IInteractiveButtonsProps> = ({ isOwner, isLoggedIn, hasReviewed }) => {
     return (
         <div className="suggested-buttons">
-            {isLoggedIn && !isOwner && (
-                <button className="btn review-btn">
-                    {' '}
-                    <FaRegStar /> Write a Review
-                </button>
+            {isLoggedIn && !isOwner && !hasReviewed && (
+                <OpenModalButton 
+                className="btn review-btn"
+                icon={<FaRegStar />}
+                buttonText="Write a Review"
+                modalComponent={<CreateReviewModal />}
+                />
             )}
             <button className="btn">
                 {' '}

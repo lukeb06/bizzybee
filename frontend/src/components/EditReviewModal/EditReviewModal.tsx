@@ -37,10 +37,11 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({ reviewToEdit }) => {
 
     const data = await dispatch(thunkEditReview(updatedReview));
 
-    if (data && data.errors) {
-      setErrors(data.errors);
+    if (data && data.error) {
+      setErrors(Array.isArray(data.error) ? data.error : [data.error]);
     } else {
       closeModal();
+      window.location.reload();
     }
   };
 
@@ -50,8 +51,8 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({ reviewToEdit }) => {
         <h2>Edit Review</h2>
         {errors.length > 0 && (
           <div className="error-container">
-            {errors.map((error, index) => (
-              <p key={index} className="error-message">{error}</p>
+            {errors.map((error, idx) => (
+              <p key={idx} className="error-message">{error}</p>
             ))}
           </div>
         )}

@@ -36,17 +36,18 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
 
     const sortedReviews = [...reviews].sort((a, b) => b.id - a.id);
 
-    const showPostFirstReviewMessage = sortedReviews.length === 0 && [];
+    const showPostFirstReview = sortedReviews.length === 0 && [];
     sessionUser && business && sessionUser.id !== business.owner_id;
 
     return (
         <div className="reviews-container">
-            <h2>Reviews</h2>
+            <h2>{business?.average_rating?.toFixed(1)} ({business?.review_count}{' '}
+                                {business?.review_count === 1 ? "Review" : "Reviews"})</h2>
 
             {sortedReviews.length > 0 ? (
                 <div className="reviews-list">
-                    {sortedReviews.map((review: IReview) => (
-                        <div key={review.id} className="review-item">
+                    {sortedReviews.map((review: IReview, idx) => (
+                        <div key={`${idx}-${review.id}`} className="review-item">
                             <div className="user-info">
                                 <div>
                                     <FaUserCircle size={45} color={'#a6a6a6'} />
@@ -80,7 +81,7 @@ const Reviews: React.FC<ReviewsProps> = ({ business }) => {
                         </div>
                     ))}
                 </div>
-            ) : showPostFirstReviewMessage ? (
+            ) : showPostFirstReview ? (
                 <p>Be the first to post a review!</p>
             ) : (
                 <p>No reviews yet.</p>
