@@ -39,11 +39,31 @@ def seed_images():
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
+    
+    image5 = Image(
+        url="https://s3-media0.fl.yelpcdn.com/bphoto/K3qmqXaqQbg3saVZN1knkg/o.jpg",
+        business_id=3,
+        is_featured=True,
+        is_preview=False,
+        created_at=datetime.utcnow(),
+        updated_at=datetime.utcnow()
+    )
+
+    image6 = Image(
+        url="https://s3-media0.fl.yelpcdn.com/bphoto/Myzobv7zY5hAoYD02fkIeA/o.jpg",
+        business_id=3,
+        is_featured=False,
+        is_preview=True,
+        created_at=datetime.utcnow(),
+        updated_at=datetime.utcnow()
+    )
 
     db.session.add(image1)
     db.session.add(image2)
     db.session.add(image3)
     db.session.add(image4)
+    db.session.add(image5)
+    db.session.add(image6)
     db.session.commit()
 
 
