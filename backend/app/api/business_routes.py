@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from app.models import Business, Image
 from flask_login import login_required, current_user
 from app.models.db import db
@@ -76,7 +76,27 @@ def business(id: int):
     """
 
     business = Business.query.get(id)
-    return jsonify(business.to_dict())
+    if not business:
+        return jsonify({"error": "Business not found"}), 404
+    
+    # Get all business reviews
+    reviews = business.reviews
+    review_count = len(reviews)
+    average_rating = (
+        sum(review.stars for review in reviews) / review_count if review_count > 0 else None
+    )
+
+    # Get featured image
+    for image in business.images:
+        if image.is_featured:
+            featured_image = image.url
+            break
+
+    business_data = business.to_dict()
+    business_data["featured_image"] = featured_image
+    business_data["average_rating"] = average_rating
+    business_data["review_count"] = review_count
+    return jsonify(business_data)
 
 
 @business_routes.route("/", methods=["POST"])
@@ -86,8 +106,6 @@ def create_business():
     Create a business
     """
     form = BusinessForm()
-    data = request.get_json()
-    form.process(data=data)
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
@@ -132,15 +150,17 @@ def create_business():
         # add other images
         image_urls = form.data.get("image_urls", [])
         for url in image_urls:
-            image = Image(
+            if url:
+                image = Image(
                 business_id=business_id, url=url, is_featured=False, is_preview=False
             )
-        db.session.add(image)
+                db.session.add(image)
 
         db.session.commit()
         return jsonify(business.to_dict()), 201
     else:
-        return jsonify({"errors": form.errors}), 401
+        current_app.logger.warning("Form errors: %s", form.errors)
+        return jsonify(errors=form.errors), 400
 
 
 @business_routes.route("/<id>", methods=["PUT"])

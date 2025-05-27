@@ -24,7 +24,7 @@ const deleteReviewAction = (review: IReviewId): ReviewAction => ({
 // Get all reviews
 export const thunkGetAllReviews = (id: IReviewBusinessId): any => async (dispatch: any) => {
     try {
-        const response = await fetch(`/api/reviews/business/${id}`);
+        const response = await fetch(`/api/reviews/business/${id.id}`);
         if (response.ok) {
             const data = await response.json();
             dispatch(getAllReviewsAction(data));
@@ -65,7 +65,7 @@ export const thunkCreateReview =
     (id: IReviewId): any =>
         async (dispatch: any) => {
             try {
-                const response = await fetch(`/api/reviews/${id}`, {
+                const response = await fetch(`/api/reviews/${id.id}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -85,12 +85,13 @@ export const thunkCreateReview =
         export const thunkEditReview = (reviewToEdit: IReview) => async (dispatch: any) => {
           const { id, review, stars } = reviewToEdit;
           const response = await fetch(`/api/reviews/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({
-              review,
-              stars
-            })
-          });
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    });
           const data = await response.json();
           dispatch(getAllReviewsAction(data));
           return data;

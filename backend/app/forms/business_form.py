@@ -22,7 +22,7 @@ class BusinessForm(FlaskForm):
     featured_image = StringField("Feature Image", validators=[DataRequired()])
     preview_image = StringField("Preview Image", validators=[DataRequired()])
     image_urls = FieldList(
-        StringField("Image URL", validators=[DataRequired()]),
+        StringField("Image URL", validators=[]),
         min_entries=1,
         label="Image URLs"
     )

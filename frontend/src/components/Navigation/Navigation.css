@@ -4,6 +4,10 @@ body {
 .profile-dropdown {
     position: absolute;
 }
+.yelp-logo{
+    width: 2rem;
+    height: 2rem;
+}
 
 .nav-bar {
     display: flex;

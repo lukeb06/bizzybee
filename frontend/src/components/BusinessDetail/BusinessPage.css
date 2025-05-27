@@ -1,0 +1,65 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
+.image-gallery {
+    position: relative;
+    display: flex;
+    height: 500px;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.business-info {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.business-info h1 {
+    margin-bottom: 1px;
+}
+
+.separator {
+    border-top: 1px solid #cbc8c8;
+    margin: 20px 0;
+    opacity: 0.5;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.detail-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 40px;
+    gap: 20px;
+}
+
+.detail-left {
+    width: 100%;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.other-info {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

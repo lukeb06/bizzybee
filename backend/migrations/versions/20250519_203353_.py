@@ -60,7 +60,7 @@ def upgrade():
     op.create_table(
         "images",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("url", sa.String(length=300), nullable=False),
+        sa.Column("url", sa.String(length=4096), nullable=False),
         sa.Column("business_id", sa.Integer(), nullable=False),
         sa.Column("is_featured", sa.Boolean(), nullable=False),
         sa.Column("is_preview", sa.Boolean(), nullable=False),

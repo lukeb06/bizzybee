@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { thunkCreateBusiness } from '../../redux/business';
-import { IBusiness, IBusinessForm, ValidationErrors } from '../../redux/types/business';
+import { IBusinessForm, ValidationErrors } from '../../redux/types/business';
 import './CreateBusinessForm.css';
 import { RootState, useAppSelector } from '../../redux/store';
 
@@ -15,14 +15,15 @@ interface ICreateBusinessError {
     description?: string;
     country?: string;
     priceRange?: string;
-    previewImage?: string;
-    submit?: string;
+    featuredImage?: string;
+    message?: string;
 }
 
 const CreateBusinessFormPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useAppSelector((state: RootState) => state.session.user);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const [name, setName] = useState('');
     const [country, setCountry] = useState('');
@@ -32,12 +33,10 @@ const CreateBusinessFormPage = () => {
     const [zipcode, setZipcode] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [priceRange, setPriceRange] = useState('0');
-    const [previewImage, setPreviewImage] = useState('');
+    const [priceRange, setPriceRange] = useState('');
     const [featuredImage, setFeaturedImage] = useState('');
-    const [imageUrls, setImageUrls] = useState(['', '', '', '']);
-    const [lat, setLat] = useState('0');
-    const [lng, setLng] = useState('0');
+    const [previewImage, setPreviewImage] = useState('');
+    const [imageUrls, setImageUrls] = useState(['', '']);
     const [errors, setErrors] = useState<ICreateBusinessError>({
         name: '',
         address: '',
@@ -46,31 +45,24 @@ const CreateBusinessFormPage = () => {
         country: '',
         description: '',
         priceRange: '',
-        previewImage: '',
+        featuredImage: '',
     });
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrors({
-            name: '',
-            address: '',
-            city: '',
-            state: '',
-            country: '',
-            description: '',
-            priceRange: '',
-            previewImage: '',
-        });
-        const validationErrors: ValidationErrors = {};
+        setIsSubmitted(true);
+
+        const validationErrors: ICreateBusinessError = {};
         if (!name) validationErrors.name = 'Business name is required';
         if (!address) validationErrors.address = 'Address is required';
         if (!city) validationErrors.city = 'City is required';
         if (!state) validationErrors.state = 'State is required';
+        if (!zipcode) validationErrors.state = 'Zipcode is required';
         if (!country) validationErrors.country = 'Country is required';
         if (description.length < 30)
             validationErrors.description = 'Description needs 30 or more characters';
-        if (!priceRange) validationErrors.priceRange = 'Price per night is required';
-        if (!previewImage) validationErrors.previewImage = 'Preview image URL is required';
+        if (!priceRange) validationErrors.priceRange = 'Price range is required';
+        if (!featuredImage) validationErrors.featuredImage = 'Featured image URL is required';
 
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
@@ -80,30 +72,49 @@ const CreateBusinessFormPage = () => {
         const businessData: IBusinessForm = {
             owner_id: sessionUser!.id,
             name,
-            country,
             address,
             city,
             state,
+            country,
             zipcode,
             category,
             description,
             price_range: priceRange,
-            preview_image: previewImage,
             featured_image: featuredImage,
+            preview_image: previewImage,
             image_urls: imageUrls,
-            lat,
-            lng,
         };
-
-        // console.log(spotData, 'THIS IS THE NEW SPOT DATA');
 
         const newBusiness = await dispatch(thunkCreateBusiness(businessData));
 
         if (newBusiness) {
+            // navigate('/');
             navigate(`/business/${newBusiness.id}`);
         } else {
-            setErrors({ submit: 'Failed to create spot. Please try again.' });
+            setErrors({ message: 'Failed to create business. Please try again.' });
         }
+    };
+
+    const autoFill = () => {
+        setName('Pauli');
+        setCountry('United States');
+        setAddress('65 Salem St');
+        setState('MA');
+        setCity('Boston');
+        setZipcode('02113');
+        setCategory('takeout');
+        setDescription(
+            'Our menu features a wide variety of sandwiches, lobster rolls, salads, wraps, breakfast items, pastas, burgers and entrees sure to please any customer.',
+        );
+        setPriceRange('2');
+        setFeaturedImage(
+            'https://www.ameliaisland.com/wp-content/uploads/2024-Amelia-Masons-Famous-Lobster-Rolls-031A-Deremer-Studios-LLC.jpg',
+        );
+        setPreviewImage('https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg');
+        setImageUrls([
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+            'https://s3-media0.fl.yelpcdn.com/bphoto/3KQWr3Bd7TFb6Wd4BraDkg/o.jpg',
+        ]);
     };
 
     return (
@@ -124,31 +135,6 @@ const CreateBusinessFormPage = () => {
                         />
                         {errors.name && <span className="error-message">{errors.name}</span>}
                     </label>
-
-                    {/* <label>
-                        <div className="label-row">
-                            <span>
-                                Give customers a phone number so they can call your business
-                            </span>{' '}
-                        </div>
-                        <input
-                            type="text"
-                            value={country}
-                            onChange={e => setCountry(e.target.value)}
-                            placeholder="Business Phone Number"
-                        />
-                    </label> */}
-                    {/* <label>
-                        <div className="label-row">
-                            <span>Do you have a business website?</span>{' '}
-                        </div>
-                        <input
-                            type="text"
-                            value={country}
-                            onChange={e => setCountry(e.target.value)}
-                            placeholder="Website (optional)"
-                        />
-                    </label> */}
                     <label>
                         <div>
                             <p>What kind of business are you in?</p>{' '}
@@ -184,7 +170,7 @@ const CreateBusinessFormPage = () => {
                             type="text"
                             value={address}
                             onChange={e => setAddress(e.target.value)}
-                            placeholder="Street Address (optional)"
+                            placeholder="Street Address"
                         />
                     </label>
                     <div className="city-state">
@@ -251,28 +237,6 @@ const CreateBusinessFormPage = () => {
                             />
                         </label>
                     </div>
-                    <div className="lat-lng">
-                        <label>
-                            <span className="label-row">Latitude {''}</span>
-                            <input
-                                className="input-box-lat"
-                                type="text"
-                                value={lat}
-                                onChange={e => setLat(e.target.value)}
-                                placeholder="Latitude"
-                            />
-                        </label>
-                        <label>
-                            <span className="label-row">Longitude {''}</span>
-                            <input
-                                className="input-box-lng"
-                                type="text"
-                                value={lng}
-                                onChange={e => setLng(e.target.value)}
-                                placeholder="Longitude"
-                            />
-                        </label>
-                    </div>
                 </section>
 
                 <section className="description-section">
@@ -282,9 +246,6 @@ const CreateBusinessFormPage = () => {
                         features. Minimum 30 characters.
                     </p>
                     <textarea
-                        // size={10}
-                        // rows={1}
-                        // type="text"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters"
@@ -304,8 +265,9 @@ const CreateBusinessFormPage = () => {
                         id="price_range"
                         name="price_range"
                         required
-                        onChange={(e) => setPriceRange(e.target.value)}
-                        >
+                        value={priceRange}
+                        onChange={e => setPriceRange(e.target.value)}
+                    >
                         <option value="">Select</option>
                         <option value="1">$</option>
                         <option value="2">$$</option>
@@ -319,18 +281,25 @@ const CreateBusinessFormPage = () => {
                 </section>
 
                 <section className="image-section">
-                    <h3>Liven up your business with photos</h3>
+                    <h3>Share your business photos</h3>
                     <p>Add images to showcase your business — food, services, ambiance, etc.</p>
+                    <input
+                        type="text"
+                        value={featuredImage}
+                        onChange={e => setFeaturedImage(e.target.value)}
+                        placeholder="Featured Image URL"
+                    />
+                    {errors.featuredImage && (
+                        <span className="error-message">{errors.featuredImage}</span>
+                    )}
                     <input
                         type="text"
                         value={previewImage}
                         onChange={e => setPreviewImage(e.target.value)}
                         placeholder="Preview Image URL"
                     />
-                    {errors.previewImage && (
-                        <span className="error-message">{errors.previewImage}</span>
-                    )}
-                    {[0, 1, 2, 3].map(index => (
+
+                    {[0, 1].map(index => (
                         <input
                             key={index}
                             type="text"
@@ -344,9 +313,14 @@ const CreateBusinessFormPage = () => {
                         />
                     ))}
                 </section>
-                <button type="submit" className="create-business-button">
-                    Create Business
-                </button>
+                <div className="buttons">
+                    <button type="submit" className="create-business-button">
+                        Create Business
+                    </button>
+                    <button className="autofill-button" type="button" onClick={autoFill}>
+                        AutoFill
+                    </button>
+                </div>
             </div>
         </form>
     );

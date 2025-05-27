@@ -3,6 +3,7 @@ import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm } from 
 // ============ ACTION TYPES =================
 export const GET_ALL_BUSINESSES = 'businesses/getAllBusinesses';
 export const CREATE_BUSINESS = 'businesses/createBusiness';
+export const GET_ONE_BUSINESS = 'businesses/getOneBusiness';
 
 // ============ ACTION CREATOR =================
 const getAllBusinessesAction = (businesses: IBusiness[]) => ({
@@ -15,6 +16,11 @@ const createBusinessAction = (business: IBusiness) => ({
     payload: business,
 });
 
+const getOneBusinessAction = (business: IBusiness) => ({
+    type: GET_ONE_BUSINESS,
+    payload: business,
+});
+
 // ============ THUNK =================
 
 // Get all businesses
@@ -23,7 +29,6 @@ export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
         const response = await fetch('/api/business');
         if (response.ok) {
             const data = await response.json();
-            // console.log('=========THIS IS BUSINESS DATA=====', data);
             dispatch(getAllBusinessesAction(data));
         } else {
             throw response;
@@ -35,15 +40,36 @@ export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
     }
 };
 
+// Get one business
+export const thunkGetOneBusiness =
+    (businessId: string): any =>
+    async (dispatch: any) => {
+        try {
+            const response = await fetch(`/api/business/${businessId}`);
+            if (response.ok) {
+                const data = await response.json();
+                dispatch(getOneBusinessAction(data));
+                return data;
+            } else {
+                throw response;
+            }
+        } catch (e) {
+            const err = e as Response;
+            const errorMessages = await err.json();
+            return errorMessages;
+        }
+    };
+
 // Create a new business
 export const thunkCreateBusiness =
     (businessData: IBusinessForm): any =>
     async (dispatch: any) => {
         try {
-            const response = await fetch('/api/businesses', {
+            const response = await fetch('/api/business/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(businessData),
+                credentials: "include"
             });
             if (response.ok) {
                 const data = await response.json();
@@ -72,7 +98,7 @@ export default function businessReducer(
     let newState = {
         ...state,
     };
-    let newById = {...newState.byId};
+    let newById = { ...newState.byId };
     let allBusiness = [...newState.allBusinesses];
 
     switch (action.type) {
@@ -87,9 +113,21 @@ export default function businessReducer(
                 newState.byId = newById;
                 newState.allBusinesses = allBusiness;
                 return newState;
-            } else {
-                return state;
             }
+            return state;
+
+        case GET_ONE_BUSINESS:
+            if (!Array.isArray(action.payload)) {
+                const business = action.payload;
+                newById[business.id] = business;
+
+                newState.byId = { ...newState.byId, [business.id]: business };
+                newState.allBusinesses = [...newState.allBusinesses, business];
+
+                return newState;
+            }
+            return state;
+
         case CREATE_BUSINESS:
             if (!Array.isArray(action.payload)) {
                 const newBusiness = action.payload;

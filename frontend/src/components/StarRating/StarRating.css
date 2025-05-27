@@ -1,0 +1,54 @@
+.star-rating {
+    display: flex;
+    gap: 4px;
+}
+
+.star {
+    width: 24px;
+    height: 24px;
+    background-color: #f15c41; /* Yelp-style orange */
+    border-radius: 6px;
+    position: relative;
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+}
+
+.star::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background-color: white;
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+}
+
+.star.empty::before {
+    background-color: transparent;
+}
+
+.star.half::before {
+    background: linear-gradient(to right, white 50%, transparent 50%);
+}
