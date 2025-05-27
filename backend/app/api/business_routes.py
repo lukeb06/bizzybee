@@ -78,12 +78,14 @@ def business(id: int):
     business = Business.query.get(id)
     if not business:
         return jsonify({"error": "Business not found"}), 404
-    
+
     # Get all business reviews
     reviews = business.reviews
     review_count = len(reviews)
     average_rating = (
-        sum(review.stars for review in reviews) / review_count if review_count > 0 else None
+        sum(review.stars for review in reviews) / review_count
+        if review_count > 0
+        else None
     )
 
     # Get featured image
@@ -152,8 +154,11 @@ def create_business():
         for url in image_urls:
             if url:
                 image = Image(
-                business_id=business_id, url=url, is_featured=False, is_preview=False
-            )
+                    business_id=business_id,
+                    url=url,
+                    is_featured=False,
+                    is_preview=False,
+                )
                 db.session.add(image)
 
         db.session.commit()
@@ -191,7 +196,7 @@ def update_business(id):
     business.lng = data.get("lng", business.lng)
 
     db.session.commit()
-    return jsonify(business.todict())
+    return jsonify(business.to_dict())
 
 
 @business_routes.route("/<id>", methods=["DELETE"])
