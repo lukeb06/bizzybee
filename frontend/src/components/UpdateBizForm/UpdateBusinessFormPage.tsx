@@ -109,7 +109,7 @@ const UpdateBusinessFormPage = () => {
                     <h3>Hello! Let&apos;s start with your business name</h3>
                     <label>
                         <span>
-                            Add your business name so that we can help you claim your Yelp Page.
+                            Add your business name so that we can help you claim your BizzyBee Page.
                         </span>
                         <input
                             type="text"
