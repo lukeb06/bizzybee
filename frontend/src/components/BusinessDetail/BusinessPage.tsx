@@ -46,7 +46,7 @@ const BusinessDetailPage: React.FC = () => {
     const handleDeleteBusiness = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         await dispatch(thunkRemoveBusiness(businessId || ''));
-        navigate('/');
+        navigate('/business');
     };
     const handleUpdateBusiness = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
