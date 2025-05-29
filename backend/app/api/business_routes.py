@@ -31,6 +31,9 @@ def businesses():
     max_price = request.args.get("max_price", type=float)
     if max_price:
         query = query.filter(Business.price <= max_price)
+    min_price = request.args.get("min_price", type=float)
+    if min_price:
+        query = query.filter(Business.price >= min_price)
 
     businesses = query.all()
     if (name or category or max_price) and not businesses:
