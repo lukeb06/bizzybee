@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkEditReview } from '../../redux/review';
+import { thunkGetOneBusiness } from '../../redux/business';
 import { IReview } from '../../redux/types/review';
 import { useModal } from '../../context/Modal';
+import { useParams } from 'react-router-dom';
 import './EditReviewModal.css';
+
 
 interface EditReviewModalProps {
   reviewToEdit: IReview;
@@ -12,6 +15,7 @@ interface EditReviewModalProps {
 const EditReviewModal: React.FC<EditReviewModalProps> = ({ reviewToEdit }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const { businessId } = useParams();
   const [reviewText, setReviewText] = useState(reviewToEdit.review);
   const [stars, setStars] = useState(reviewToEdit.stars);
   const [errors, setErrors] = useState<string[]>([]);
@@ -40,8 +44,8 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({ reviewToEdit }) => {
     if (data && data.error) {
       setErrors(Array.isArray(data.error) ? data.error : [data.error]);
     } else {
+      await dispatch(thunkGetOneBusiness(businessId as any));
       closeModal();
-      window.location.reload();
     }
   };
 
