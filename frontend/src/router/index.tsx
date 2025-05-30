@@ -5,7 +5,11 @@ import Layout from './Layout';
 import CreateBusinessFormPage from '../components/CreateBizForm';
 import BusinessDetailPage from '../components/BusinessDetail';
 import HomePage from '../components/HomePage';
+
+import SearchPage from '../components/SearchPage/SearchPage';
+
 import UpdateBusinessFormPage from '../components/UpdateBizForm';
+
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path: '/business/:businessId',
                 element: <BusinessDetailPage />,
+            },
+            {
+                path: '/business/search',
+                element: <SearchPage/>
             },
             {
                 path: '*',

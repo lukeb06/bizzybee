@@ -13,8 +13,11 @@ body {
 .login-link {
     background-color: #d32323;
     color: white;
-    padding: 0.5rem 1rem;
+
+    padding: .25rem;
     font-size: 1.2rem;
+ 
+
     box-sizing: border-box;
     transition: background-color 0.2s ease;
     cursor: pointer;
@@ -31,6 +34,21 @@ body {
 
 .login-link {
     margin-right: 10px;
+}
+.search-bar-form > div{
+    display: flex;
+}
+.search-bar-form-submit {
+    background-color: #d32323;
+    color: white;
+    font-size: 14px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .nav-bar {

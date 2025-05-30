@@ -1,23 +1,25 @@
+import './SearchPage.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllBusinesses } from '../../redux/business';
-import './ViewAllBusinesses.css';
 import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReviewStar from '../ReviewStar/ReviewStar';
 import { IFilteredBusiness } from '../../redux/types/business';
-
-export default function ViewAllBusinessesPage() {
-    const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
+export default function SearchPage(){
+const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
     // console.log('=========THIS IS BUSINESS=====', businesses);
     const dispatch = useDispatch();
+    const location=useLocation()
     const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
-    const filters: IFilteredBusiness={}
+    const [filters, setFilters] = useState({})
+    
     // console.log('Businesses:', businesses);
 
     useEffect(() => {
         const getBusinesses = async () => {
+            setFilters(location.state)
             dispatch(thunkGetAllBusinesses(filters));
             setIsLoaded(true);
         };
@@ -112,4 +114,5 @@ export default function ViewAllBusinessesPage() {
             </div>
         </>
     );
+
 }

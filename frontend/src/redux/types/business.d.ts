@@ -63,3 +63,9 @@ export interface ValidationErrors {
     featuredImage?: string;
     imageUrls?: [];
 }
+export interface IFilteredBusiness{
+    name?: string;
+    category?: string;
+    min_price?: string;
+    max_price?: string;
+}
