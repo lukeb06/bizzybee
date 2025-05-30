@@ -4,26 +4,36 @@ body {
 .profile-dropdown {
     position: absolute;
 }
-.yelp-logo{
+.yelp-logo {
     width: 2.5rem;
     height: 2.5rem;
 }
-.sign-up-button{
+
+.sign-up-button,
+.login-link {
     background-color: #d32323;
     color: white;
+
     padding: .25rem;
     font-size: 1.2rem;
  
+
     box-sizing: border-box;
-}
-.login-link{
-    font-size: 1.2rem;
-    padding: .5rem 1rem;
-    box-sizing: border-box;
-    height: 2rem;
-}
-.login-link>a{
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border-radius: 4px;
+    border: solid 1px #a71b1b;
     text-decoration: none;
+}
+
+.sign-up-button:hover,
+.login-link:hover {
+    background-color: #e14747;
+    border: solid 1px #d32323;
+}
+
+.login-link {
+    margin-right: 10px;
 }
 .search-bar-form > div{
     display: flex;
