@@ -5,6 +5,7 @@ import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReviewStar from '../ReviewStar/ReviewStar';
+import { IFilteredBusiness } from '../../redux/types/business';
 
 export default function ViewAllBusinessesPage() {
     const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
@@ -12,12 +13,12 @@ export default function ViewAllBusinessesPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const filters: IFilteredBusiness={}
     // console.log('Businesses:', businesses);
 
     useEffect(() => {
         const getBusinesses = async () => {
-            dispatch(thunkGetAllBusinesses());
+            dispatch(thunkGetAllBusinesses(filters));
             setIsLoaded(true);
         };
         if (!isLoaded) {
