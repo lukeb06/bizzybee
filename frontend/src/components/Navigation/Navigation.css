@@ -11,9 +11,9 @@ body {
 .sign-up-button{
     background-color: #d32323;
     color: white;
-    padding: .5rem 1rem;
+    padding: .25rem;
     font-size: 1.2rem;
-    height: 2rem;
+ 
     box-sizing: border-box;
 }
 .login-link{
@@ -24,6 +24,21 @@ body {
 }
 .login-link>a{
     text-decoration: none;
+}
+.search-bar-form > div{
+    display: flex;
+}
+.search-bar-form-submit {
+    background-color: #d32323;
+    color: white;
+    font-size: 14px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .nav-bar {
