@@ -30,7 +30,12 @@ class Business(db.Model):
 
     # Relationship
     user = db.relationship("User", back_populates="businesses", uselist=False)
-    reviews = db.relationship("Review", back_populates="businesses", uselist=True)
+    reviews = db.relationship(
+        "Review",
+        back_populates="businesses",
+        uselist=True,
+        cascade="all, delete-orphan",
+    )
     images = db.relationship(
         "Image", back_populates="businesses", cascade="all, delete-orphan"
     )
