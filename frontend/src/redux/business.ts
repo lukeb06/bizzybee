@@ -1,4 +1,4 @@
-import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm, IFilteredBusiness } from './types/business';
+import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm, IFilteredBusiness, IBusinessId } from './types/business';
 
 // ============ ACTION TYPES =================
 export const GET_ALL_BUSINESSES = 'businesses/getAllBusinesses';
@@ -28,7 +28,7 @@ const updateBusinessAction = (business: IBusiness) => ({
     payload: business,
 });
 
-const removeBusinessAction = (businessId: number | string) => ({
+const removeBusinessAction = (businessId: IBusinessId) => ({
     type: REMOVE_BUSINESS,
     payload: businessId,
 });
@@ -138,7 +138,7 @@ export const thunkUpdateBusiness =
 
 // Delete a new business
 export const thunkRemoveBusiness =
-    (businessId: number | string): any =>
+    (businessId: IBusinessId): any =>
     async (dispatch: any) => {
         try {
             const response = await fetch(`/api/business/${businessId}`, {
@@ -219,8 +219,8 @@ export default function businessReducer(
             } else return state;
             return newState;
         case REMOVE_BUSINESS:
-            const businessId = action.payload as string | number;
-            newState.allBusinesses = newState.allBusinesses.filter(b => b.id !== businessId);
+            const businessId = action.payload as IBusinessId;
+            newState.allBusinesses = newState.allBusinesses.filter(b => b.id !== businessId.id);
             return newState;
         default:
             return state;
