@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkDeleteReview } from '../../redux/review';
+import { thunkGetOneBusiness } from '../../redux/business';
 import { useModal } from '../../context/Modal';
+import { useParams } from 'react-router-dom';
 import './DeleteReviewModal.css'
 
 interface DeleteReviewModalProps {
@@ -11,11 +13,12 @@ interface DeleteReviewModalProps {
 const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const { businessId } = useParams();
 
-  const handleDelete = () => {
-    dispatch(thunkDeleteReview({ id: reviewId }));
+  const handleDelete = async () => {
+    await dispatch(thunkDeleteReview({ id: reviewId }));
+    await dispatch(thunkGetOneBusiness(businessId as any));
     closeModal();
-    window.location.reload();
   };
 
   return (
