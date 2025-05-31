@@ -1,4 +1,4 @@
-import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm } from './types/business';
+import { IBusiness, BusinessState, IBusinessActionCreator, IBusinessForm, IFilteredBusiness, IBusinessId } from './types/business';
 
 // ============ ACTION TYPES =================
 export const GET_ALL_BUSINESSES = 'businesses/getAllBusinesses';
@@ -28,7 +28,7 @@ const updateBusinessAction = (business: IBusiness) => ({
     payload: business,
 });
 
-const removeBusinessAction = (businessId: number | string) => ({
+const removeBusinessAction = (businessId: IBusinessId) => ({
     type: REMOVE_BUSINESS,
     payload: businessId,
 });
@@ -36,9 +36,23 @@ const removeBusinessAction = (businessId: number | string) => ({
 // ============ THUNK =================
 
 // Get all businesses
-export const thunkGetAllBusinesses = (): any => async (dispatch: any) => {
+export const thunkGetAllBusinesses = (businessFilters: IFilteredBusiness): any => async (dispatch: any) => {
     try {
-        const response = await fetch('/api/business');
+        const url = new URL('/api/business', window.location.origin);
+        if(businessFilters.name){
+            url.searchParams.set('name', businessFilters.name);
+
+        }
+           if(businessFilters.category){
+            url.searchParams.set('category', businessFilters.category);
+        }
+           if(businessFilters.min_price){
+            url.searchParams.set('min_price', businessFilters.min_price);
+        }
+           if(businessFilters.max_price){
+            url.searchParams.set('max_price', businessFilters.max_price);
+        }
+        const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
             dispatch(getAllBusinessesAction(data));
@@ -124,7 +138,7 @@ export const thunkUpdateBusiness =
 
 // Delete a new business
 export const thunkRemoveBusiness =
-    (businessId: number | string): any =>
+    (businessId: IBusinessId): any =>
     async (dispatch: any) => {
         try {
             const response = await fetch(`/api/business/${businessId}`, {
@@ -205,8 +219,8 @@ export default function businessReducer(
             } else return state;
             return newState;
         case REMOVE_BUSINESS:
-            const businessId = action.payload as string | number;
-            newState.allBusinesses = newState.allBusinesses.filter(b => b.id !== businessId);
+            const businessId = action.payload as IBusinessId;
+            newState.allBusinesses = newState.allBusinesses.filter(b => b.id !== businessId.id);
             return newState;
         default:
             return state;

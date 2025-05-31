@@ -37,8 +37,8 @@ export interface IBusinessForm {
     image_urls: string[];
 }
 
-export interface BusinessId {
-    [id: number]: IBusiness;
+export interface IBusinessId {
+    id: number
 }
 
 export interface BusinessState {
@@ -63,3 +63,11 @@ export interface ValidationErrors {
     featuredImage?: string;
     imageUrls?: [];
 }
+export interface IFilteredBusiness{
+    name?: string;
+    category?: string;
+    min_price?: string;
+    max_price?: string;
+}
+
+
