@@ -13,14 +13,13 @@ const businesses = useSelector((state: RootState) => state.businesses.allBusines
     const location=useLocation()
     const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [filters, setFilters] = useState({})
+    
     
     // console.log('Businesses:', businesses);
 
     useEffect(() => {
         const getBusinesses = async () => {
-            setFilters(location.state)
-            dispatch(thunkGetAllBusinesses(filters));
+            dispatch(thunkGetAllBusinesses(location.state));
             setIsLoaded(true);
         };
         if (!isLoaded) {
