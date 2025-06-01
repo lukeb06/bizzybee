@@ -3,12 +3,14 @@ import ReviewStar from '../ReviewStar/ReviewStar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../redux/store';
 import { useDispatch } from 'react-redux';
-import { thunkGetOneBusiness, thunkRemoveBusiness } from '../../redux/business';
+import { thunkGetOneBusiness } from '../../redux/business';
 import Reviews from '../Reviews/Reviews';
 import OrderSection from './OrderSection/OrderSection';
 import InteractiveButtons from './InteractiveButtons/InteractiveButtons';
 import { FaCircleCheck } from 'react-icons/fa6';
 import './BusinessPage.css';
+import OpenModalButton from '../OpenModalButton';
+import DeleteBusinessModal from '../DeleteBizModal';
 
 const BusinessDetailPage: React.FC = () => {
     const navigate = useNavigate();
@@ -43,11 +45,6 @@ const BusinessDetailPage: React.FC = () => {
         return <div>Business not found</div>;
     }
 
-    const handleDeleteBusiness = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        await dispatch(thunkRemoveBusiness({id: Number(businessId)}));
-        navigate('/business');
-    };
     const handleUpdateBusiness = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         navigate(`/update-business/${businessId}`);
@@ -119,8 +116,12 @@ const BusinessDetailPage: React.FC = () => {
             {/* Dev items, please delete if not needed, or adjust */}
             {currentUser?.id === business?.owner_id && (
                 <>
-                    <button onClick={e => handleDeleteBusiness(e)}>Delete a businesss</button>
-                    <button onClick={e => handleUpdateBusiness(e)}>Update a business</button>
+                    <OpenModalButton
+                                    buttonText="Delete Business"
+                                    onModalClose={null}
+                                    modalComponent={<DeleteBusinessModal businessId={businessId as any} />}
+                                />
+                    <button onClick={e => handleUpdateBusiness(e)}>Update business</button>
                 </>
             )}
         </div>

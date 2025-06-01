@@ -5,7 +5,6 @@ import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReviewStar from '../ReviewStar/ReviewStar';
-import { IFilteredBusiness } from '../../redux/types/business';
 export default function SearchPage(){
 const businesses = useSelector((state: RootState) => state.businesses.allBusinesses);
     // console.log('=========THIS IS BUSINESS=====', businesses);
@@ -39,7 +38,7 @@ const businesses = useSelector((state: RootState) => state.businesses.allBusines
         <>
             <div className="business-list">
                 {businesses.length === 0 ? (
-                    <p>No businesses available</p>
+                    <h2>No results found matching your search</h2>
                 ) : (
                     <div className="business-list">
                         {businesses.map((business, index) => (

@@ -10,11 +10,12 @@ body {
    
 }
 
-.sign-up-button {
+.sign-up-button,
+.login-link {
     background-color: #d32323;
     color: white;
 
-    padding: .25rem;
+    padding: .25rem .5rem;
     font-size: 1.2rem;
  
 
@@ -32,9 +33,12 @@ body {
     border: solid 1px #d32323;
 }
 
-.login-link {
-    margin-right: 10px;
+.login-signup-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
 .price-list{
     list-style: none;
     display: flex;
