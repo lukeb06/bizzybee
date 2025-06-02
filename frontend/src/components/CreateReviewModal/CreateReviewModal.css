@@ -15,16 +15,6 @@
     color: #333;
 }
 
-.review-errors {
-    color: #d93025;
-    background-color: #fbe9e7;
-    border: 1px solid #f9c6c0;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
 .create-review-modal form {
     display: flex;
     flex-direction: column;

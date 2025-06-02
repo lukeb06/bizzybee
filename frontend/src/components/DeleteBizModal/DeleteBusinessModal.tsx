@@ -1,43 +1,42 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { thunkDeleteReview } from '../../redux/review';
-import { thunkGetOneBusiness } from '../../redux/business';
+import { thunkRemoveBusiness } from '../../redux/business';
 import { useModal } from '../../context/Modal';
-import { useParams } from 'react-router-dom';
-import './DeleteReviewModal.css'
+import { useNavigate } from 'react-router-dom';
 
-interface DeleteReviewModalProps {
-  reviewId: number;
+interface DeleteBusinessModalProps {
+  businessId: number;
 }
 
-const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
+const DeleteBusinessModal: React.FC<DeleteBusinessModalProps> = ({ businessId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { closeModal } = useModal();
-  const { businessId } = useParams();
 
-  const handleDelete = async () => {
-    await dispatch(thunkDeleteReview({ id: reviewId }));
-    await dispatch(thunkGetOneBusiness(businessId as any));
-    closeModal();
-  };
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          e.preventDefault();
+          await dispatch(thunkRemoveBusiness({id: Number(businessId)}));
+          closeModal();
+          navigate('/business');
+      };
 
   return (
     <div className="delete-modal-backdrop">
       <div className="delete-modal-content">
         <h2 className="delete-modal-title">Confirm Delete</h2>
-        <p className="delete-modal-message">Are you sure you want to delete this review?</p>
+        <p className="delete-modal-message">Are you sure you want to delete this business?</p>
         <div className="delete-modal-buttons">
           <button
             className="delete-modal-button delete-modal-button-no"
             onClick={closeModal}
           >
-            No (Keep Review)
+            No (Keep Business)
           </button>
           <button
             className="delete-modal-button delete-modal-button-yes"
             onClick={handleDelete}
           >
-            Yes (Delete Review)
+            Yes (Delete Business)
           </button>
         </div>
       </div>
@@ -45,4 +44,4 @@ const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
   );
 };
 
-export default DeleteReviewModal;
+export default DeleteBusinessModal;

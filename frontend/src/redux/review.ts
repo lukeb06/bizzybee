@@ -82,7 +82,7 @@ export const thunkCreateReview =
                 return errorMessages;
             }
         };
-        export const thunkEditReview = (reviewToEdit: IReview) => async (dispatch: any) => {
+        export const thunkEditReview = (reviewToEdit: IReview): any => async (dispatch: any) => {
           const { id, review, stars } = reviewToEdit;
           const response = await fetch(`/api/reviews/${id}`, {
         method: "PUT",

@@ -73,8 +73,8 @@ def edit_review(review_id: int):
 
     data = request.get_json()
 
-    if not isinstance(data["review"], str) or data["review"] == "" or len(data["review"]) > 1000:
-        return jsonify({"error": "Review must be at least 1 character and less than 1000 characters"}), 400
+    if not isinstance(data["review"], str) or len(data["review"]) > 1000 or len(data["review"]) < 30 or data["review"].startswith(" ") or data["review"].endswith(" "):
+        return jsonify({"error": "Review must be 30 to 1000 characters and cannot start or end with a space."}), 400
 
     if not isinstance(data["stars"], int) or data["stars"] < 1 or data["stars"] > 5:
         return jsonify({"error": "Star ratings must be a number from 1 to 5"}), 400

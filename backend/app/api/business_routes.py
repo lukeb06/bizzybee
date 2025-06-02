@@ -36,8 +36,6 @@ def businesses():
         query = query.filter(Business.price_range >= min_price)
 
     businesses = query.all()
-    if (name or category or max_price) and not businesses:
-        return jsonify({"message": "No businesses found matching your search."}), 404
 
     # Get all businesses with reviews and images
   

@@ -43,6 +43,8 @@ function Navigation(): JSX.Element {
         return () => document.removeEventListener('click', closeMenu);
     }, [showMenu]);
     function submitHandler(e: FormEvent) {
+
+        e.preventDefault()
         let minVal=min_price
         let maxVal=max_price
         if(minVal>maxVal){
@@ -79,7 +81,7 @@ function Navigation(): JSX.Element {
                     }></input>
                     <button type="submit" className="search-bar-form-submit"><CiSearch /></button>
                 </div>
-                <button onClick={e => toggleMenu(e)} className="price-dropdown">Price</button>
+                <button type="button" onClick={e => toggleMenu(e)} className="price-dropdown">Price Range</button>
                 {showMenu &&
                     (<ul className="price-list"ref={ulRef}>
                         <div>
@@ -117,7 +119,7 @@ function Navigation(): JSX.Element {
                 </div>
                 <div>
                     {!sessionUser && (
-                        <div>
+                        <div className="login-signup-container">
                             <NavLink to="/login" className="login-link">Log In</NavLink>
                             <OpenModalButton
                                 buttonText="Sign Up"
