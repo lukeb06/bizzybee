@@ -14,9 +14,9 @@ function LoginFormPage() {
     const [errors, setErrors] = useState<any>({});
 
     if (sessionUser) return <Navigate to="/" replace={true} />;
-    const demoLogin = () => {
-        setEmail('demo@aa.io');
-        setPassword('password');
+    
+    const demoLogin = async () => {
+        await dispatch(thunkLogin({email: 'demo@aa.io', password: 'password'}));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
