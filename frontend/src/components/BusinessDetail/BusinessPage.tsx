@@ -9,8 +9,6 @@ import OrderSection from './OrderSection/OrderSection';
 import InteractiveButtons from './InteractiveButtons/InteractiveButtons';
 import { FaCircleCheck } from 'react-icons/fa6';
 import './BusinessPage.css';
-import OpenModalButton from '../OpenModalButton';
-import DeleteBusinessModal from '../DeleteBizModal';
 
 const BusinessDetailPage: React.FC = () => {
     const navigate = useNavigate();
@@ -98,6 +96,8 @@ const BusinessDetailPage: React.FC = () => {
                             isOwner={isOwner}
                             isLoggedIn={!!currentUser}
                             hasReviewed={hasReviewed}
+                            businessId={businessId}
+                            handleUpdateBusiness={handleUpdateBusiness}
                         />
                     </div>
 
@@ -113,17 +113,6 @@ const BusinessDetailPage: React.FC = () => {
                     <OrderSection business={business} />
                 </div>
             </div>
-            {/* Dev items, please delete if not needed, or adjust */}
-            {currentUser?.id === business?.owner_id && (
-                <>
-                    <OpenModalButton
-                                    buttonText="Delete Business"
-                                    onModalClose={null}
-                                    modalComponent={<DeleteBusinessModal businessId={businessId as any} />}
-                                />
-                    <button onClick={e => handleUpdateBusiness(e)}>Update business</button>
-                </>
-            )}
         </div>
     );
 };
