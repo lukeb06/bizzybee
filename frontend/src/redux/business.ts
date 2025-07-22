@@ -141,7 +141,7 @@ export const thunkRemoveBusiness =
     (businessId: IBusinessId): any =>
     async (dispatch: any) => {
         try {
-            const response = await fetch(`/api/business/${businessId}`, {
+            const response = await fetch(`/api/business/${businessId.id}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });
