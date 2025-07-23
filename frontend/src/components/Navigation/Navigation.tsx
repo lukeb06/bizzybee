@@ -63,7 +63,7 @@ function Navigation(): JSX.Element {
         <nav className="nav-bar">
             <div className="nav-left">
                 <NavLink to="/">
-                    <img src="https://static-00.iconduck.com/assets.00/yelp-icon-2048x2048-ys10gku9.png" alt="yelp logo" className="yelp-logo" />
+                    <img src="/bizzybee-logo.svg" alt="yelp logo" className="yelp-logo" />
                 </NavLink>
             </div>
             <form className="search-bar-form" onSubmit={(e) => {
