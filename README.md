@@ -30,6 +30,6 @@
 - allows users to search for different businesses with different filters.
 - allows users to create, update, and delete reviews for businesses.
 
-### [[Live-Site](https://bizzybee-ugmu.onrender.com/)]
+### [[Live-Site](https://bizzybee-24c7.onrender.com/)]
 
 
