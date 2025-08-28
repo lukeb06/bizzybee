@@ -13,7 +13,7 @@ export default function ViewAllBusinessesPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
-    const filters: IFilteredBusiness={}
+    const filters: IFilteredBusiness = {};
     // console.log('Businesses:', businesses);
 
     useEffect(() => {
@@ -68,6 +68,7 @@ export default function ViewAllBusinessesPage() {
                                     <div className="biz-details">
                                         <div className="biz-title">
                                             <h2>{business.name}</h2>
+                                            <button className="order-btn">Order</button>
                                         </div>
                                         {/* <div className="star-rating">
                                             <span>
@@ -78,7 +79,7 @@ export default function ViewAllBusinessesPage() {
                                             <span className="review-count">(42 reviews)</span>
                                         </div> */}
                                         <ReviewStar rating={business.average_rating} />
-                                        <div className="biz-hour"></div>
+
                                         <div className="location-price-hour">
                                             <span>
                                                 {business.city}, {business.state}
@@ -86,22 +87,21 @@ export default function ViewAllBusinessesPage() {
                                             <span> • </span>
                                             <span>{'$'.repeat(business.price_range)}</span>
                                             <span> • </span>
-                                            <span> Closed/Open until 7:00AM</span>
+                                            <span className="status"> Open </span>{' '}
+                                            <span>until 7:00 AM</span>
                                         </div>
                                         <div className="most-recent-review">
-                                            {/* <span>
-                                            {business.avgRating
-                                                ? parseFloat(business.avgRating).toFixed(1)
-                                                : 'New'}{' '}
-                                        </span> */}
+                                            {/* need to add */}
+                                            {business.description}
                                         </div>
                                         <div className="tag-order">
                                             <div className="tags">
-                                                <span className="tag">Coffee & Tea</span>
-                                                <span className="tag">Sandwiches</span>
-                                                <span className="tag">Coffee Roasteries</span>
+                                                <span className="business-tag">Coffee & Tea</span>
+                                                <span className="business-tag">Sandwiches</span>
+                                                <span className="business-tag">
+                                                    Coffee Roasteries
+                                                </span>
                                             </div>
-                                            <button className="order-button">Order</button>
                                         </div>
                                     </div>
                                 </div>
