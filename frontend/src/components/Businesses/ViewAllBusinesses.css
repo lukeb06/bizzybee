@@ -10,6 +10,7 @@ body {
     flex-direction: column;
     gap: 50px;
     padding: 30px;
+    margin: 1rem 10rem 1rem 3rem;
 }
 
 .business-card {
@@ -63,6 +64,15 @@ body {
     font-weight: 600;
 }
 
+.location-price-hour {
+    font-size: 0.85rem;
+    padding-top: 0.75rem;
+}
+
+.status {
+    color: green;
+}
+
 .star-rating {
     display: flex;
     flex-direction: row;
@@ -82,12 +92,12 @@ body {
     gap: 8px;
 }
 
-.tag {
+.business-tag {
     font-size: 12px;
     padding: 4px 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #d5d5d5;
     border-radius: 999px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
 .order-btn {
